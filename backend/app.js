@@ -1,14 +1,32 @@
-require('dotenv').config()
-const express = require('express')
-const app = express()
+import dotenv from 'dotenv';
+dotenv.config();
+import './config/mongoose-connection.js';
 
-console.log(process.env.NODE_ENV);
+import express, { json, urlencoded } from 'express';
+import cors from 'cors';
+import pkg from 'body-parser';
+import cookieParser from "cookie-parser";
 
+import adminRoutes from './routes/adminRouter.js';
+import userRoutes from './routes/userRouter.js';
+import productRoutes from './routes/productRouter.js';
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const { json: _json } = pkg;
+const app = express();
+const port = process.env.PORT || 3000;
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Example app listening on port ${process.env.PORT || 3000}`)
+// Middlewares
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(_json());
+
+// Connecting routes
+app.use('/admin', adminRoutes);
+app.use('/', userRoutes);
+app.use('/product', productRoutes);
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })
