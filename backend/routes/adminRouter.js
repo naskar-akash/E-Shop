@@ -1,8 +1,11 @@
 import { Router } from 'express';
 const router = Router();
+import { loginUser, registerUser } from '../controllers/userController.js';
 
-router.get("/", (req, res) => {
-  res.send("admin page");
-});
+// Route to create a new admin
+router.post("/create", registerUser);
+
+// Route to login admin
+router.post("/login", loginUser);
 
 export default router;

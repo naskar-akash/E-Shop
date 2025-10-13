@@ -19,6 +19,7 @@ const userSchema = new Schema({
     profilePic: {
         type: String,
     },
+    cart: {},
     joinedDate: {
         type: String,
         default: date,

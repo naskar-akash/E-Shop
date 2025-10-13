@@ -1,11 +1,7 @@
 import { Router } from 'express';
 const router = Router();
-import isLogged from '../middleware/isLoggedd.js'
+import isLogged from '../middleware/isLogged.js'
 import { registerUser, loginUser, logoutUser, getUser } from '../controllers/userController.js';
-
-router.get("/", (req, res) => {
-  res.send("User page");
-});
 
 // Route to create a new user
 router.post("/register", registerUser);
