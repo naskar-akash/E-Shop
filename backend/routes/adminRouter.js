@@ -1,11 +1,17 @@
 import { Router } from 'express';
 const router = Router();
-import { loginUser, registerUser } from '../controllers/userController.js';
+import { loginAdmin, registerAdmin, createProduct, removeProduct } from '../controllers/adminController.js';
 
 // Route to create a new admin
-router.post("/create", registerUser);
+router.post("/register", registerAdmin);
 
 // Route to login admin
-router.post("/login", loginUser);
+router.post("/login", loginAdmin);
+
+// Route to create products
+router.post("/create", createProduct)
+
+//Route to remove a product by id
+router.delete("/remove/:id", removeProduct)
 
 export default router;

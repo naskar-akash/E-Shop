@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import dateTime from '../utils/dateTime.js';
-const { date, time } = dateTime();
+const { date } = dateTime();
 
 const adminSchema = new Schema({
     name: {

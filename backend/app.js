@@ -24,7 +24,7 @@ app.use(_json());
 
 // Connecting routes
 app.use('/admin', adminRoutes);
-app.use('/', userRoutes);
+app.use('/user', userRoutes);
 app.use('/product', productRoutes);
 
 app.listen(port, () => {
