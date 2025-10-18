@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import groceryHome from "./Images/beautyHome.jpg";
 import phoneHome from "./Images/groceryHome.jpg";
 import beautyHome from "./Images/phoneHome.jpg";
+import paintHome from "./Images/paintingHome.jpg";
 
-const images = [groceryHome, phoneHome, beautyHome];
+const images = [groceryHome, phoneHome, beautyHome, paintHome];
 
 const Imageslider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,19 +22,24 @@ const Imageslider = () => {
 
   return (
     <div className="w-full flex justify-center items-center px-4">
-      <div className="w-full flex flex-col max-w-6xl h-[40vh] pt-2 bg-blue-300 shadow-lg rounded-xl overflow-hidden">
-        <img
-          src={images[currentIndex]}
-          alt="slider"
-          className="w-[95%] h-[90%] object-contain rounded transition-all duration-700"
-        />
-        <div className="flex justify-center gap-2 mt-2">
+      <div className="w-full max-w-6xl h-[40vh] flex flex-col pt-2 overflow-hidden relative">
+        {/*Slider container*/}
+        <div
+          className="w-full h-full flex items-center justify-center overflow-hidden">
+            <img
+              src={images[currentIndex]}
+              alt="slider"
+              className="w-full h-full object-fill transition-all duration-500 rounded-xl shadow-lg"
+            />
+        </div>
+        {/*Dots navigation*/}
+        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
           {images.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`w-3 h-3 rounded-full ${
-                currentIndex == i ? "bg-blue-700" : "bg-gray-200"
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                currentIndex === i ? "bg-blue-700 scale-110" : "bg-gray-300"
               }`}
             ></button>
           ))}
