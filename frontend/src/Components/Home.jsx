@@ -7,6 +7,9 @@ import Beauty from "./Subnavcomponents/Beauty";
 import Toys from "./Subnavcomponents/Toys";
 import Paintings from "./Subnavcomponents/Paintings";
 import Imageslider from "./Imageslider";
+import DailyNeeds from "./Cards/DailyNeeds";
+import Electro from "./Cards/Electro";
+import Paint from "./Cards/Paint";
 
 const Home = () => {
   const [activePage, setActivePage] = useState("Grocery");
@@ -38,11 +41,11 @@ const Home = () => {
           <Subnavbar setActivePage={setActivePage} setOpen={setOpen} />
           <Imageslider />
           <div className="flex flex-col justify-center gap-2 w-full mt-2">
-            <div className="w-[98%] h-[20vh] bg-blue-400 mx-4">Daily Needs</div>
-            <div className="w-[98%] h-[20vh] bg-blue-400 mx-4">
-              Best of Electronics
+            <div className="w-[98%] h-[20vh] bg-sky-200 mx-4"><DailyNeeds/></div>
+            <div className="w-[98%] h-[50vh] bg-sky-200 mx-4">
+              <Electro/>
             </div>
-            <div className="w-[98%] h-[20vh] bg-blue-400 mx-4">Paintings</div>
+            <div className="w-[98%] h-[20vh] bg-blue-400 mx-4"><Paint/></div>
           </div>
         </div>
       )}

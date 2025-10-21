@@ -1,12 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { assets } from "../assets/assets";
 
-import groceryHome from "./Images/beautyHome.jpg";
-import phoneHome from "./Images/groceryHome.jpg";
-import beautyHome from "./Images/phoneHome.jpg";
-import paintHome from "./Images/paintingHome.jpg";
-
-const images = [groceryHome, phoneHome, beautyHome, paintHome];
+const images = [assets.vegCombo1, assets.electPhone1, assets.beautyLipstick, assets.paint11];
 
 const Imageslider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
