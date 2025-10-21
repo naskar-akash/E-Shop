@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
 
-const images = [assets.vegCombo1, assets.electPhone1, assets.beautyLipstick, assets.paint11];
+const images = [assets.vegCombo1, assets.electPhone1, assets.beautyLipstick, assets.toySoft, assets.paint11];
 
 const Imageslider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

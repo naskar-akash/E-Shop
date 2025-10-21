@@ -6,7 +6,7 @@ function App() {
   
 
   return (
-    <div className='bg-gray-400 min-h-[100vh] flex flex-col'>
+    <div className='bg-blue-100 flex flex-col'>
     <Navbar/>
     <main>
       <Outlet/>

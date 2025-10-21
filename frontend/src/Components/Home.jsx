@@ -1,56 +1,51 @@
 import React from "react";
-import { useState } from "react";
 import Subnavbar from "./Subnavbar";
-import Grocery from "./Subnavcomponents/Grocery";
-import Electronics from "./Subnavcomponents/Electronics";
-import Beauty from "./Subnavcomponents/Beauty";
-import Toys from "./Subnavcomponents/Toys";
-import Paintings from "./Subnavcomponents/Paintings";
 import Imageslider from "./Imageslider";
-import DailyNeeds from "./Cards/DailyNeeds";
-import Electro from "./Cards/Electro";
-import Paint from "./Cards/Paint";
+import DailyCards from "./Cards/DailyCards";
+import ElectroCards from "./Cards/ElectroCards";
+import PaintCards from "./Cards/PaintCards";
+import BeautyCards from "./Cards/BeautyCards";
+import ToysCards from "./Cards/ToysCards";
 
 const Home = () => {
-  const [activePage, setActivePage] = useState("Grocery");
-  const [open, setOpen] = useState(false);
-
-  const renderPage = () => {
-    switch (activePage) {
-      case "Grocery":
-        return <Grocery />;
-      case "Electronics":
-        return <Electronics />;
-      case "Beauty":
-        return <Beauty />;
-      case "Toys":
-        return <Toys />;
-      case "Paintings":
-        return <Paintings />;
-      default:
-        return <Grocery />;
-    }
-  };
 
   return (
-    <div className="min-h-[100vh]">
-      {open ? (
-        renderPage()
-      ) : (
         <div className="flex flex-col gap-2">
-          <Subnavbar setActivePage={setActivePage} setOpen={setOpen} />
+          <Subnavbar />
           <Imageslider />
           <div className="flex flex-col justify-center gap-2 w-full mt-2">
-            <div className="w-[98%] h-[20vh] bg-sky-200 mx-4"><DailyNeeds/></div>
-            <div className="w-[98%] h-[50vh] bg-sky-200 mx-4">
-              <Electro/>
+            <div className="flex flex-col">
+              <p className="text-3xl font-bold my-6 mx-4 text-cyan-800 font-sans">Daily Needs</p>
+            <div className="w-[98%] h-[40vh] bg-gray-500 mx-4 rounded-sm">
+              <DailyCards />
             </div>
-            <div className="w-[98%] h-[20vh] bg-blue-400 mx-4"><Paint/></div>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-3xl font-bold my-6 mx-4 text-gray-800 font-sans">Best of Electronics</p>
+            <div className="w-[98%] h-[60vh] mx-4">
+              <ElectroCards />
+            </div>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-3xl font-bold my-6 mx-4 text-pink-800 font-sans">Beauty products</p>
+            <div className="w-[98%] h-[40vh] bg-gray-500 mx-4 rounded-sm">
+              <BeautyCards />
+            </div>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-3xl font-bold my-6 mx-4 text-purple-800 font-sans">Best of Paintings</p>
+            <div className="w-[98%] h-[60vh] mx-4">
+              <PaintCards />
+            </div>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-3xl font-bold my-6 mx-4 text-blue-900 font-sans">Kids</p>
+            <div className="w-[98%] h-[40vh] bg-gray-500 mx-4 rounded-sm">
+              <ToysCards />
+            </div>
+            </div>
           </div>
         </div>
-      )}
-    </div>
-  );
-};
+      )};
 
 export default Home;
