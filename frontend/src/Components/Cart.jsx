@@ -2,8 +2,8 @@ import React from 'react'
 
 const Cart = () => {
   return (
-    <div>
-      cart
+    <div className='w-full flex justify-center items-center'>
+      <div></div>
     </div>
   )
 }

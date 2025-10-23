@@ -46,6 +46,7 @@ import vegGrapes from "./veg-grapes.jpg";
 import vegOnion from "./veg-onion.jpg";
 import vegPotato from "./veg-potato.jpg";
 import vegWatermelon from "./veg-watermelon.jpg";
+import logoLogin from "./logo-login.png"
 
 export const assets = {
   beautyCreame,
@@ -96,4 +97,5 @@ export const assets = {
   vegOnion,
   vegPotato,
   vegWatermelon,
+  logoLogin,
 };
