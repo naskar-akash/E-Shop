@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { assets } from "../assets/assets";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -60,7 +62,7 @@ const Login = () => {
             </form>
           </div>
           <div className="w-full flex justify-center align-middle">
-            <p className="text-blue-600 font-semibold text-md py-8 hover:cursor-pointer">
+            <p onClick={()=>navigate("/login/signup")} className="text-blue-600 font-semibold text-md py-8 hover:cursor-pointer">
               New to E-Shop? Create an account
             </p>
           </div>
