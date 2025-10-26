@@ -27,6 +27,10 @@ const userSchema = new Schema({
     joinedTime: {
         type: String,
         default: time,
+    },
+    isAdmin:{
+        type: Boolean,
+        default: false,
     }
 });
 

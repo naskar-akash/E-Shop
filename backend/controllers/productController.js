@@ -9,3 +9,18 @@ export const getAllProducts = async (req,res)=>{
     return res.status(500).json({message: error.message});
    }
 };
+
+// Fuction to create products
+export const createProducts = async ( req,res ) => {
+
+};
+
+// Function to delete a product
+export const removeProducts = async ( req,res ) => {
+
+};
+
+// Function to update a product
+export const updateProducts = async ( req,res ) => {
+
+};
