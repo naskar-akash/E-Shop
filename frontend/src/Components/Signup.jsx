@@ -1,11 +1,89 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { registerUser } from "./Services/UserServices";
 
 const Signup = () => {
-  return (
-    <div>
-      reg
-    </div>
-  )
-}
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-export default Signup
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const result = await registerUser(data);
+      console.log(result);
+      alert(`Welcome, ${data.name}! 🎉`);
+      reset();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="w-full flex justify-center">
+      <div className="w-[60%] h-[78vh] flex flex-col justify-center mt-6 bg-white/80 px-10 py-4">
+        <h2 className="text-3xl text-blue-700 font-bold mb-8">
+          Create Your Account
+        </h2>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          method="post"
+          className="flex flex-col gap-4"
+        >
+          <input
+            {...register("name", { required: true })}
+            type="text"
+            className="w-full px-3 py-2 outline-none font-semibold  bg-gray-200 text-stone-500 rounded-sm"
+            placeholder="Name"
+          />
+          {errors.name && (
+            <span className="text-red-500 text-[14px] font-semibold">
+              Name is required
+            </span>
+          )}
+          <input
+            {...register("email", { required: true })}
+            type="text"
+            className="w-full px-3 py-2 outline-none font-semibold bg-gray-200 text-stone-500 rounded-sm"
+            placeholder="Email"
+          />
+          {errors.email && (
+            <span className="text-red-500 text-[14px] font-semibold">
+              Email is required
+            </span>
+          )}
+          <input
+            {...register("password", {
+              required: { value: true, message: "Password is required" },
+              minLength: {
+                value: 8,
+                message: "Password should contain 8 characters",
+              },
+            })}
+            type="password"
+            className="w-full px-3 py-2 outline-none font-semibold bg-gray-200 text-stone-500 rounded-sm"
+            placeholder="********"
+          />
+          {errors.password && (
+            <span className="text-red-500 text-[14px] font-semibold">
+              Password is required
+            </span>
+          )}
+          <input
+            type="submit"
+            value="Sign Up"
+            className="w-full px-2 py-3 bg-amber-500 text-white font-bold mt-3 hover:cursor-pointer rounded-sm"
+          />
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Signup;

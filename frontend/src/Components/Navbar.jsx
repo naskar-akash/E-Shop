@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineLogin } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
 import { FcShop } from "react-icons/fc";
 import { CiShop } from "react-icons/ci";
-
+import { logoutUser } from "./Services/UserServices";
 
 const Navbar = () => {
+  const [isDropDown, setIsDropDown] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      const response = await logoutUser();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="sticky top-0 shadow-md bg-white/90 mx-auto z-50 w-full">
       <nav className="flex justify-center gap-8 items-center py-3 px-6">
@@ -32,12 +43,59 @@ const Navbar = () => {
         </div>
         {/*Login and Cart section*/}
         <div className="flex gap-8">
-          <NavLink to="Login">
-            <li className="flex gap-2 py-3">
+          <div
+            className="relative"
+            onMouseEnter={() => setIsDropDown(true)}
+            onMouseLeave={() => setIsDropDown(false)}
+          >
+            <li className="flex gap-2 py-3 cursor-pointer list-none">
               <MdOutlineLogin className="size-6" />
               <p className="text-lg px-0.5">Login</p>
             </li>
-          </NavLink>
+            {/* Dropdown menu */}
+            {isDropDown && (
+              <div className="absolute top-12 left-0 bg-white shadow-md rounded-lg w-48 p-2 z-50">
+                <div className="w-full flex flex-row justify-between">
+                  <NavLink
+                    to="/login/signup"
+                    className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md"
+                  >
+                    Signup
+                  </NavLink>
+                  <NavLink
+                    to="/login"
+                    className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md"
+                  >
+                    Login
+                  </NavLink>
+                </div>
+                <NavLink
+                  to="/profile"
+                  className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md"
+                >
+                  Profile
+                </NavLink>
+                <NavLink
+                  to="/orders"
+                  className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md"
+                >
+                  Orders
+                </NavLink>
+                <NavLink
+                  to="/cart"
+                  className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md"
+                >
+                  Wishlist
+                </NavLink>
+                <p
+                  onClick={handleLogout}
+                  className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md hover:cursor-pointer"
+                >
+                  Logout
+                </p>
+              </div>
+            )}
+          </div>
           <NavLink to="Cart">
             <li className="flex gap-2 py-3">
               <FaCartShopping className="size-6" />

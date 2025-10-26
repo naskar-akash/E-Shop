@@ -3,7 +3,7 @@ import React from 'react'
 const Cart = () => {
   return (
     <div className='w-full flex justify-center items-center'>
-      <div></div>
+      <div className='w-[98%] h-[100vh]'></div>
     </div>
   )
 }
