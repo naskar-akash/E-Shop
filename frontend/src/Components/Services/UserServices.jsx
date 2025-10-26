@@ -9,20 +9,15 @@ export const registerUser = async (_data) => {
         email: _data.email,
         password: _data.password,
     });
-    const config = {
-      method: "post",
-      maxBodyLength: Infinity,
+    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/register`, data, {
       withCredentials: true,
-      url: `${import.meta.env.VITE_SERVER_URL}/user/register`,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      data: data,
-    };
-    const response = await axios.request(config);
+    });
     return response;
   } catch (error) {
-    throw error;
+    throw new Error(error?.response?.data?.message || error.message || "Request failed!");
   }
 };
 
@@ -39,7 +34,7 @@ export const loginUser = async (_data) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -52,6 +47,18 @@ export const logoutUser = async () => {
       withCredentials: true,
     });
     return response;  
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Function to fetch user profile API
+export const getUserProfile = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
+      withCredentials: true,
+    });
+    return response;
   } catch (error) {
     throw error;
   }

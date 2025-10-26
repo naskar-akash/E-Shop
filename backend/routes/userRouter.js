@@ -13,6 +13,6 @@ router.post("/login", loginUser)
 router.post("/logout", logoutUser)
 
 // Route to get a user by email
-router.get("/:name",isLogged, getUser)
+router.get("/profile",isLogged, getUser)
 
 export default router;

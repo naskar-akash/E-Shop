@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { assets } from "../assets/assets";
 import { loginUser } from "./Services/UserServices";
+import AlertMsg from "./Services/AlertMsg";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { serverMsg, status, showAlert } = AlertMsg(2);
   const {
     register,
     handleSubmit,
@@ -15,18 +17,30 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-      const result = await loginUser(data);
-      console.log(result);
+      const response = await loginUser(data);
       reset();
       navigate("/");
+      alert(`Welcome, ${response.user.name}! 🎉`);
     } catch (error) {
-      console.log(error);
+      showAlert(error.response || error, "success", "error");
     }
   };
 
   return (
     <div className="w-full flex justify-center">
+
+      {/*Showing flash message*/}
+      {serverMsg && (
+        <div
+          className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+            status === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          {serverMsg}
+        </div>
+      )}
+
       <div className="w-[60%] h-[75vh] flex flex-row justify-center mt-6">
         <div className="w-2/5 bg-blue-500 flex flex-col justify-between p-8">
           <div className="flex justify-center flex-col gap-2">

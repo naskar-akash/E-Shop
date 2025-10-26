@@ -11,7 +11,7 @@ export const registerUser = async (req, res) => {
     }
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User has already registered!" });
+      return res.status(400).json({ message: "User already exists with this email, Login!" });
     }
     bcrypt.genSalt(10, (err, salt) => {
       if (err) return res.status(400).json({ message: err.message });
@@ -19,7 +19,7 @@ export const registerUser = async (req, res) => {
         if (err) return res.status(400).json({ message: err.message });
         const user = await userModel.create({ name, email, password: hash });
         await user.save();
-        res.status(200).json({message: "User registered!", user})
+        res.status(200).json({message: "User created successfully!",user })
       });
     });
   } catch (error) {
@@ -38,7 +38,7 @@ export const loginUser = async ( req, res ) => {
             if (result) {
                 let token = genToken(user);
                 res.cookie("token", token);
-                res.status(201).json({message: "Logged in!"});
+                res.status(201).json({message: "Logged in!", user});
             } else {
                 res.status(401).json({message: "Email or Password incorrect!"})
             };
@@ -50,8 +50,12 @@ export const loginUser = async ( req, res ) => {
 
 // Function to logout a user
 export const logoutUser = ( req,res ) => {
+  try {
     res.cookie("token", "");
-    res.status(201).json({message: "Logged out successfully!"})
+    res.status(201).json({message: "Logged out successfully!"});
+  } catch (error) {
+    return res.status(500).json({message: error.message});
+  }
 };
 
 

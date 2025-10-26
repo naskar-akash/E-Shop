@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "./Services/UserServices";
+import AlertMsg from "./Services/AlertMsg";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { serverMsg, status, showAlert } = AlertMsg(2);
   const {
     register,
     handleSubmit,
@@ -14,19 +16,35 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-      const result = await registerUser(data);
-      console.log(result);
-      alert(`Welcome, ${data.name}! 🎉`);
+      const response = await registerUser(data);
+      console.log(response);
+      
+      if(response.user) {
+        return alert(`${response.user.name}, your account has been created!`);
+      }
+      showAlert(response, "success", "error");
       reset();
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      showAlert(error || error.response, "success", "error");
     }
   };
 
   return (
     <div className="w-full flex justify-center">
+
+      {/*Showing flash message*/}
+      {serverMsg && (
+        <div
+          className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+            status === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          {serverMsg}
+        </div>
+      )}
+
       <div className="w-[60%] h-[78vh] flex flex-col justify-center mt-6 bg-white/80 px-10 py-4">
         <h2 className="text-3xl text-blue-700 font-bold mb-8">
           Create Your Account

@@ -6,21 +6,36 @@ import { FaCartShopping } from "react-icons/fa6";
 import { FcShop } from "react-icons/fc";
 import { CiShop } from "react-icons/ci";
 import { logoutUser } from "./Services/UserServices";
+import AlertMsg from "./Services/AlertMsg";
 
 const Navbar = () => {
   const [isDropDown, setIsDropDown] = useState(false);
+  const { serverMsg, status, showAlert } = AlertMsg(2);
 
   const handleLogout = async () => {
     try {
       const response = await logoutUser();
-      console.log(response);
+      showAlert(response, "success", "error");
     } catch (error) {
-      console.log(error);
+      showAlert(error.response || error, "success", "error");
     }
   };
 
   return (
     <div className="sticky top-0 shadow-md bg-white/90 mx-auto z-50 w-full">
+
+      {/*Showing flash message*/}
+      {serverMsg && (
+        <div
+          className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+            status === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          {serverMsg}
+        </div>
+      )}
+
       <nav className="flex justify-center gap-8 items-center py-3 px-6">
         {/*Logo section*/}
         <NavLink to="/" className="flex items-center gap-2">
