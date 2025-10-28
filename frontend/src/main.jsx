@@ -8,6 +8,8 @@ import Login from "./Components/Login.jsx";
 import Cart from "./Components/Cart.jsx";
 import Signup from "./Components/Signup.jsx";
 import CategoryPageWrapper from "./Components/Subnavcomponents/CategoryPageWrap.jsx";
+import AdminHome from "./Components/Admin/AdminHome.jsx";
+import CreateProducts from "./Components/Admin/CreateProduct.jsx"
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,8 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "login", element: <Login /> },
       { path: "cart", element: <Cart /> },
+      { path: "admin", element: <AdminHome /> },
+      { path: "admin/create", element: <CreateProducts /> },
       { path: "login/signup", element: <Signup /> },
       { path: "/:name", element: <CategoryPageWrapper /> },
     ],

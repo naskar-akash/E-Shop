@@ -19,7 +19,14 @@ const userSchema = new Schema({
     profilePic: {
         type: String,
     },
-    cart: {},
+    cart: {
+        type: Array,
+        default: [],
+    },
+    orders: {
+        type: Array,
+        default: [],
+    },
     joinedDate: {
         type: String,
         default: date,
@@ -28,9 +35,10 @@ const userSchema = new Schema({
         type: String,
         default: time,
     },
-    isAdmin:{
-        type: Boolean,
-        default: false,
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
     }
 });
 

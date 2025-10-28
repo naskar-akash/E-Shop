@@ -2,13 +2,9 @@ import axios from "axios";
 import qs from "qs";
 
 //Function to fetch register user API
-export const registerUser = async (_data) => {
+export const registerUser = async (name, email, password, role) => {
   try {
-    const data = qs.stringify({
-        name: _data.name,
-        email: _data.email,
-        password: _data.password,
-    });
+    const data = qs.stringify({ name, email, password, role });
     const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/register`, data, {
       withCredentials: true,
       headers: {

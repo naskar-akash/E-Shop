@@ -9,7 +9,8 @@ import { logoutUser } from "./Services/UserServices";
 import AlertMsg from "./Services/AlertMsg";
 
 const Navbar = () => {
-  const [isDropDown, setIsDropDown] = useState(false);
+  const [loginDropDown, setLoginDropDown] = useState(false);
+  const [sellerDropDown, setSellerDropDown] = useState(false);
   const { serverMsg, status, showAlert } = AlertMsg(2);
 
   const handleLogout = async () => {
@@ -60,15 +61,15 @@ const Navbar = () => {
         <div className="flex gap-8">
           <div
             className="relative"
-            onMouseEnter={() => setIsDropDown(true)}
-            onMouseLeave={() => setIsDropDown(false)}
+            onMouseEnter={() => setLoginDropDown(true)}
+            onMouseLeave={() => setLoginDropDown(false)}
           >
             <li className="flex gap-2 py-3 cursor-pointer list-none">
               <MdOutlineLogin className="size-6" />
               <p className="text-lg px-0.5">Login</p>
             </li>
             {/* Dropdown menu */}
-            {isDropDown && (
+            {loginDropDown && (
               <div className="absolute top-12 left-0 bg-white shadow-md rounded-lg w-48 p-2 z-50">
                 <div className="w-full flex flex-row justify-between">
                   <NavLink
@@ -117,12 +118,22 @@ const Navbar = () => {
               <p className="text-lg px-0.5">Cart</p>
             </li>
           </NavLink>
-          <NavLink to="Cart">
-            <li className="flex gap-2 py-3">
+          {/* Admin's section to create, remove, update or get created items */}
+          <div className="relative"
+            onMouseEnter={() => setSellerDropDown(true)}
+            onMouseLeave={() => setSellerDropDown(false)}>
+              <li className="flex gap-2 py-3 cursor-pointer list-none">
               <CiShop className="size-6" />
               <p className="text-lg px-0.5">Become seller</p>
             </li>
-          </NavLink>
+            {/*Dropdown menu*/}
+            {sellerDropDown && (
+              <div className="absolute top-12 left-0 bg-white shadow-md rounded-lg w-48 p-2 z-50">
+                <NavLink to="admin" className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md">View</NavLink>
+                <NavLink to="/admin/create" className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md">Create Products</NavLink>
+              </div>
+            )}
+            </div>
         </div>
       </nav>
     </div>

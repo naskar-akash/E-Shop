@@ -68,7 +68,7 @@ const Login = () => {
                 </span>
                 <input
                   {...register("email", { required: true })}
-                  type="text"
+                  type="email"
                   className="w-full p-0.5 font-semibold border-b-1 border-blue-500 outline-none"
                 />
                 {errors.email && (

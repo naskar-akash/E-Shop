@@ -15,14 +15,13 @@ const Signup = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const role = data.role? "admin" : "user"; 
     try {
-      const response = await registerUser(data);
+      const response = await registerUser(data.name, data.email, data.password, role);
       console.log(response);
-      
-      if(response.user) {
+      if (response.user) {
         return alert(`${response.user.name}, your account has been created!`);
       }
-      showAlert(response, "success", "error");
       reset();
       navigate("/login");
     } catch (error) {
@@ -32,7 +31,6 @@ const Signup = () => {
 
   return (
     <div className="w-full flex justify-center">
-
       {/*Showing flash message*/}
       {serverMsg && (
         <div
@@ -52,7 +50,7 @@ const Signup = () => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           method="post"
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-1"
         >
           <input
             {...register("name", { required: true })}
@@ -67,8 +65,8 @@ const Signup = () => {
           )}
           <input
             {...register("email", { required: true })}
-            type="text"
-            className="w-full px-3 py-2 outline-none font-semibold bg-gray-200 text-stone-500 rounded-sm"
+            type="email"
+            className="w-full px-3 py-2 mt-4 outline-none font-semibold bg-gray-200 text-stone-500 rounded-sm"
             placeholder="Email"
           />
           {errors.email && (
@@ -85,7 +83,7 @@ const Signup = () => {
               },
             })}
             type="password"
-            className="w-full px-3 py-2 outline-none font-semibold bg-gray-200 text-stone-500 rounded-sm"
+            className="w-full px-3 py-2 mt-4 outline-none font-semibold bg-gray-200 text-stone-500 rounded-sm"
             placeholder="********"
           />
           {errors.password && (
@@ -93,10 +91,16 @@ const Signup = () => {
               Password is required
             </span>
           )}
+          <div className="w-full flex flex-row justify-center gap-2 mt-4">
+            <input {...register("role")} type="checkbox" />
+            <span className="font-bold text-md text-gray-500">
+              Want to be an admin?
+            </span>
+          </div>
           <input
             type="submit"
             value="Sign Up"
-            className="w-full px-2 py-3 bg-amber-500 text-white font-bold mt-3 hover:cursor-pointer rounded-sm"
+            className="w-full px-2 py-3 mt-4 bg-amber-500 text-white font-bold hover:cursor-pointer rounded-sm"
           />
         </form>
       </div>

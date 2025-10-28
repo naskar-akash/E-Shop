@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import dateTime from '../utils/dateTime.js';
-const { date, time } = dateTime();
+const { date } = dateTime();
 
 const productSchema = new Schema({
     name: {
@@ -8,8 +8,7 @@ const productSchema = new Schema({
         required: true
     },
     photo: {
-        type: String,
-        required: true
+        type: Buffer,
     },
     description: {
         type: String,
@@ -23,7 +22,11 @@ const productSchema = new Schema({
         type: Number,
         required: true,
     },
-    users: {},
+    discount: {
+        type: Number,
+        default: 0
+    },
+    admin: {},
     addedDate: {
         type: String,
         default: date,
