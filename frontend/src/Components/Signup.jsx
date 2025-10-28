@@ -43,7 +43,7 @@ const Signup = () => {
         </div>
       )}
 
-      <div className="w-[60%] h-[78vh] flex flex-col justify-center mt-6 bg-white/80 px-10 py-4">
+      <div className="w-[60%] h-[78vh] flex flex-col justify-center mt-6 bg-white/80 shadow-xl px-10 py-4">
         <h2 className="text-3xl text-blue-700 font-bold mb-8">
           Create Your Account
         </h2>
@@ -88,7 +88,7 @@ const Signup = () => {
           />
           {errors.password && (
             <span className="text-red-500 text-[14px] font-semibold">
-              Password is required
+              {errors.password.message}
             </span>
           )}
           <div className="w-full flex flex-row justify-center gap-2 mt-4">
