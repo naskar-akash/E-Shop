@@ -18,7 +18,6 @@ const Signup = () => {
     const role = data.role? "admin" : "user"; 
     try {
       const response = await registerUser(data.name, data.email, data.password, role);
-      console.log(response);
       if (response.user) {
         return alert(`${response.user.name}, your account has been created!`);
       }

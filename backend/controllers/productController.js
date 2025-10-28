@@ -1,5 +1,4 @@
 import productModel from "../models/product-model.js";
-import upload from "../config/multer-config.js"
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -15,17 +14,22 @@ export const getAllProducts = async (req, res) => {
 // Fuction to create products
 export const createProducts = async (req, res) => {
   try {
-    const { name, photo, description, category, price, discount } = req.body;
+    const { name, description, category, price, discount } = req.body;
 
     const products = await productModel.create({
       name,
-      photo,
+      image: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      },
       description,
       category,
       price,
       discount,
     });
-    res.status(201).json({message: "Product created successfully!", products});
+    res
+      .status(201)
+      .json({ message: "Product created successfully!", products });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -33,7 +37,7 @@ export const createProducts = async (req, res) => {
 
 // Function to delete a product
 export const removeProducts = async (req, res) => {
-   try {
+  try {
     const { id } = req.params;
     const product = await productModel.findByIdAndDelete(id);
     if (!product) {
@@ -41,7 +45,7 @@ export const removeProducts = async (req, res) => {
     }
     res.status(200).json({ message: "Product removed!", product });
   } catch (error) {
-    return res.status(500).json({message: error.message});
+    return res.status(500).json({ message: error.message });
   }
 };
 

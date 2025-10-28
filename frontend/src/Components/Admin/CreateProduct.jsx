@@ -1,16 +1,17 @@
-import React,{ useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AlertMsg from "../Services/AlertMsg";
+import { createProducts } from "../Services/ProductServices";
 
 const CreateProduct = () => {
   const [preview, setPreview] = useState(null);
-  // const [serverMsg, status, showAlert] = AlertMsg(2);
+  const { serverMsg, status, showAlert } = AlertMsg(2);
 
   const {
     register,
     handleSubmit,
     reset,
-    watch, 
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -27,16 +28,31 @@ const CreateProduct = () => {
     }
   }, [imageFile]);
 
-  const onSubmit = (data) => {
-    
-    console.log(data.image[0]);
-    reset();
-    setPreview(null);
-    // API call
+  const onSubmit = async (data) => {
+    try {
+      const response = await createProducts(data);
+      showAlert(response, "success", "error");
+      reset();
+      setPreview(null);
+    } catch (error) {
+      showAlert(error || error.response, "success", "error");
+    }
   };
 
   return (
     <div className="w-full min-h-screen flex items-start justify-center py-10">
+      {/*Showing flash message*/}
+      {serverMsg && (
+        <div
+          className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+            status === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          {serverMsg}
+        </div>
+      )}
+
       <div className="w-[95%] max-w-5xl mt-5 bg-white/80 shadow-xl p-8">
         <h1 className="text-blue-700 text-center text-3xl font-bold text-shadow-md mb-6">
           Create Products here
@@ -49,21 +65,28 @@ const CreateProduct = () => {
           {/*Image+Preview*/}
           <div className="col-span-1 flex flex-col items-start gap-4">
             <label className="w-full">
-              <span className="block text-sm font-medium text-gray-700 mb-2">Product Image</span>
-          <input
-            {...register("image")}
-            type="file"
-            accept="image/*"
-            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-600 file:text-white cursor-pointer"
-          />
-          </label>
-          {preview ? (
-            <img src={preview} alt="preview" className="w-44 h-44 object-cover rounded-md border"/>
-          ) : (
-            <div className="w-44 h-44 flex justify-center items-center rounded-md border border-dashed text-sm text-gray-400">Preview</div>
-          )}
+              <span className="block text-sm font-medium text-gray-700 mb-2">
+                Product Image
+              </span>
+              <input
+                {...register("image")}
+                type="file"
+                accept="image/*"
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-600 file:text-white cursor-pointer"
+              />
+            </label>
+            {preview ? (
+              <img
+                src={preview}
+                alt="preview"
+                className="w-44 h-44 object-cover rounded-md border"
+              />
+            ) : (
+              <div className="w-44 h-44 flex justify-center items-center rounded-md border border-dashed text-sm text-gray-400">
+                Preview
+              </div>
+            )}
           </div>
-
 
           {/*Other inputs*/}
           <div className="col-span-2 grid grid-col-2 gap-4">
