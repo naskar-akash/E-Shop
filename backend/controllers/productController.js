@@ -5,7 +5,15 @@ export const getAllProducts = async (req, res) => {
     const products = await productModel.find();
     if (!products)
       return res.status(404).json({ message: "No products found" });
-    return res.status(200).json(products);
+    // Convert buffer to Base64
+    const formattedProducts = products.map((product) => ({
+      ...product._doc,
+      image: product.image
+        ?  `data:${product.image.contentType};base64,${product.image.data.toString("base64")}`
+        : null,
+    }));
+
+    res.status(200).json(formattedProducts);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

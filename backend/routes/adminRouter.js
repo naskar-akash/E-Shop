@@ -9,7 +9,7 @@ import upload from "../config/multer-config.js"
 router.get("/", isLogged, isAdmin, getAllProducts)
 
 // Route to create products
-router.post("/create", upload.single("image"), isLogged, isAdmin, createProducts)
+router.post("/create", isLogged, isAdmin, upload.single("image"), createProducts)
 
 //Route to remove a product by id
 router.delete("/remove/:id", isLogged, isAdmin, removeProducts)

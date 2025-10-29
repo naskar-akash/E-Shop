@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineLogin } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
@@ -9,6 +9,7 @@ import { logoutUser } from "./Services/UserServices";
 import AlertMsg from "./Services/AlertMsg";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [loginDropDown, setLoginDropDown] = useState(false);
   const [sellerDropDown, setSellerDropDown] = useState(false);
   const { serverMsg, status, showAlert } = AlertMsg(2);
@@ -17,6 +18,7 @@ const Navbar = () => {
     try {
       const response = await logoutUser();
       showAlert(response, "success", "error");
+      navigate("/")
     } catch (error) {
       showAlert(error.response || error, "success", "error");
     }
