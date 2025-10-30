@@ -23,13 +23,17 @@ const CategoryPage = () => {
     getProducts();
   }, [name]);
 
+  const handleCart = (product) => {
+    console.log(product)
+  }
+
   if (products.length === 0) {
     return (
       <div className="text-lg min-h-screen font-semibold text-gray-400 text-center py-10">
         Sorry no products found...
       </div>
     );
-  }
+  };
 
   return (
     <div className="w-full h-full flex justify-center">
@@ -73,10 +77,13 @@ const CategoryPage = () => {
                       {product.description}
                     </p>
                     <div className="flex justify-between items-center">
-                      <span className="text-xl font-bold text-blue-600">
+                      <div className="flex justify-center gap-2">
+                      <span className="text-sm font-light text-gray-500 line-through py-1">
                         ₹{product.price}
                       </span>
-                      <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
+                      <span className="text-xl font-bold text-blue-600">₹{product.price - ((product.price*product.discount)/100)}</span>
+                      </div>
+                      <button onClick={()=>handleCart(product)} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
                         Add to Cart
                       </button>
                     </div>
@@ -86,7 +93,7 @@ const CategoryPage = () => {
                       4.5 ★
                     </span>
                     <span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                      Free Delivery
+                      {product.price >= 500 ? "Free Delivery" : product.price >= 300 && product.price < 500 ? `₹${product.price*0.05} delivery charge` : "₹15 delivery charge"}
                     </span>
                   </div>
                 </div>

@@ -27,7 +27,11 @@ const productSchema = new Schema({
         type: Number,
         default: 0
     },
-    admin: {},
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     addedDate: {
         type: String,
         default: date,

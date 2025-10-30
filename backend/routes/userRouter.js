@@ -2,6 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import isLogged from '../middleware/isLogged.js'
 import { registerUser, loginUser, logoutUser, getUser } from '../controllers/userController.js';
+import { addToCart } from '../controllers/productController.js';
 
 // Route to create a new user
 router.post("/register", registerUser);
@@ -13,6 +14,9 @@ router.post("/login", loginUser)
 router.post("/logout", logoutUser)
 
 // Route to get a user by email
-router.get("/profile",isLogged, getUser)
+router.get("/profile",isLogged, getUser);
+
+// Route to add a product to cart
+router.post("/cart", isLogged, addToCart)
 
 export default router;
