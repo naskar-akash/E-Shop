@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getAllProducts } from "../Services/ProductServices";
+import { getAllProducts, removeProducts } from "../Services/ProductServices";
 import AlertMsg from "../Services/AlertMsg";
-import DeleteProduct from "./DeleteProduct";
 
 const AdminHome = () => {
   const { serverMsg, status, showAlert } = AlertMsg(2);
@@ -18,9 +17,14 @@ const AdminHome = () => {
     getProducts();
   }, []);
 
-  const handleDelete = () => {
-    console.log("hi")
-  }
+  const handleDelete = async (product) => {
+    try {
+      const response = await removeProducts(product._id);
+      showAlert(response, "success", "error");
+    } catch (error) {
+      showAlert(error.response || error, "success", "error");
+    }
+  };
 
   return (
     <div className="w-full min-h-screen p-4 flex justify-center items-start">
@@ -93,7 +97,7 @@ const AdminHome = () => {
                     <button className="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                       Update
                     </button>
-                    <button onClick={handleDelete} className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete
+                    <button onClick={()=>handleDelete(product)} className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete
                     </button>
                   </div>
                 </div>

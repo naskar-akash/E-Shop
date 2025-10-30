@@ -44,3 +44,18 @@ export const getAllProducts = async () => {
     );
   }
 };
+
+// Function to remove a product by id
+export const removeProducts = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${import.meta.env.VITE_SERVER_URL}/admin/remove/${id}`,
+      { withCredentials: true }
+    );
+    return response;
+  } catch (error) {
+    throw new Error(
+      error?.response?.data?.message || error.message || "Request failed!"
+    );
+  }
+}

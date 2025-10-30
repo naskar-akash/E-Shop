@@ -7,7 +7,7 @@ import Home from "./Components/Home.jsx";
 import Login from "./Components/Login.jsx";
 import Cart from "./Components/Cart.jsx";
 import Signup from "./Components/Signup.jsx";
-import CategoryPageWrapper from "./Components/Subnavcomponents/CategoryPageWrap.jsx";
+import CategoryPage from "./Components/Subnavcomponents/CategoryPage.jsx";
 import AdminHome from "./Components/Admin/AdminHome.jsx";
 import CreateProducts from "./Components/Admin/CreateProduct.jsx"
 
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       { path: "admin", element: <AdminHome /> },
       { path: "admin/create", element: <CreateProducts /> },
       { path: "login/signup", element: <Signup /> },
-      { path: "/:name", element: <CategoryPageWrapper /> },
+      { path: "/:name", element: <CategoryPage /> },
     ],
   },
 ]);

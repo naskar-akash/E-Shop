@@ -11,7 +11,7 @@ const Subnavbar = () => {
           <button onClick={()=>navigate("/grocery")} className="font-medium text-lg">Grocery</button>
           <button onClick={()=>navigate("/electronics")} className="font-medium text-lg">Electronics</button>
           <button onClick={()=>navigate("/beauty")} className="font-medium text-lg">Beauty & Fashion</button>
-          <button onClick={()=>navigate("/toys")} className="font-medium text-lg">Toys</button>
+          <button onClick={()=>navigate("/kids")} className="font-medium text-lg">Kids</button>
           <button onClick={()=>navigate("/paintings")} className="font-medium text-lg">Paintings</button>
         </ul>
       </nav>
