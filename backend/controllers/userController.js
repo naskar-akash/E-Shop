@@ -80,3 +80,30 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Function to add a product to cart
+export const addToCart = async (req, res) => {
+  const { productId, quantity } = req.body;
+  const user = await userModel.findById(req.user._id);
+  const existing = user.cart.find((c) => c.product.toString() === productId);
+  if (existing) {
+    existing.quantity = existing.quantity + Number(quantity);
+  } else {
+    user.cart.push({ product: productId, quantity: Number(quantity) });
+  }
+  await user.save();
+  return res.status(200).json({ message: "Product Added to Cart", user });
+};
+
+// Function to get cart items
+export const getCartItems = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user._id).populate('cart.product');
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    } 
+    return res.status(200).json({ cart: user.cart });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}

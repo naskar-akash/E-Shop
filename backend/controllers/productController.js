@@ -1,5 +1,4 @@
 import productModel from "../models/product-model.js";
-import userModel from "../models/user-model.js";
 
 export const getAllProducts = async (req, res) => {
   try {
@@ -61,19 +60,3 @@ export const removeProducts = async (req, res) => {
 
 // Function to update a product
 export const updateProducts = async (req, res) => {};
-
-// Function to add aproduct to cart
-export const addToCart = async (req, res) => {
-  const  userId = req.user._id;
-  const {productId, quantity = 1} = req.body;
-  const user = await userModel.findById(userId);
-  const existing = user.cart.find((c) => c.product.toString() === productId);
-    if (existing) {
-      existing.quantity = existing.quantity + Number(quantity);
-    } else {
-      user.cart.push({ product: productId, quantity: Number(quantity) });
-    }
-
-    await user.save();
-    return res.status(200).json({ message: "Added to cart", cart: user.cart });
-}

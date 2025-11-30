@@ -59,3 +59,34 @@ export const getUserProfile = async () => {
     throw error;
   }
 }
+
+// Function to add a product to Cart
+export const addToCart = async ( productId, quantity ) => {
+  const data = qs.stringify({
+    productId: productId,
+    quantity: quantity,
+  });
+  try {
+    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/cart`, data, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+// Function to get cart items
+export const getCartItems = async ( userId ) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/${userId}/cart`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

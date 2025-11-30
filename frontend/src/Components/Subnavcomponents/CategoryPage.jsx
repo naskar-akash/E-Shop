@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-// import { getImagesByPrefix } from "./ImageService";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getAllProducts } from "../Services/ProductServices";
 import AlertMsg from "../Services/AlertMsg";
+import { addToCart } from "../Services/UserServices";
 
 const CategoryPage = () => {
+  const navigate = useNavigate();
   const { name } = useParams();
   const [products, setProducts] = useState([]);
   const { serverMsg, status, showAlert } = AlertMsg(2);
-  // const prodImages = getImagesByPrefix(prefix);
+  
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -23,9 +24,20 @@ const CategoryPage = () => {
     getProducts();
   }, [name]);
 
+// Handle add to cart
   const handleCart = (product) => {
-    console.log(product)
-  }
+    try {
+      const cartItem = async (product) => {
+      const response = await addToCart(product._id, 1);
+      showAlert(response.data.message, "success", "success");
+      navigate(`/cart`);
+    }
+    cartItem(product);
+    } catch (error) {
+      showAlert(error.response || error, "success", "error");
+    }
+  };
+   
 
   if (products.length === 0) {
     return (

@@ -1,8 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import isLogged from '../middleware/isLogged.js'
-import { registerUser, loginUser, logoutUser, getUser } from '../controllers/userController.js';
-import { addToCart } from '../controllers/productController.js';
+import { registerUser, loginUser, logoutUser, getUser,addToCart, getCartItems } from '../controllers/userController.js';
 
 // Route to create a new user
 router.post("/register", registerUser);
@@ -18,5 +17,8 @@ router.get("/profile",isLogged, getUser);
 
 // Route to add a product to cart
 router.post("/cart", isLogged, addToCart)
+
+// Route to get cart items
+router.get(":user/cart", isLogged, getCartItems);
 
 export default router;

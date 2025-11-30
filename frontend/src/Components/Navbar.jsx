@@ -100,17 +100,11 @@ const Navbar = () => {
                   Orders
                 </NavLink>
                 <NavLink
-                  to="/cart"
-                  className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md"
-                >
-                  Wishlist
-                </NavLink>
-                <p
                   onClick={handleLogout}
                   className="block px-3 py-2 text-gray-700 hover:bg-blue-600 hover:text-white rounded-md hover:cursor-pointer"
                 >
                   Logout
-                </p>
+                </NavLink>
               </div>
             )}
           </div>
