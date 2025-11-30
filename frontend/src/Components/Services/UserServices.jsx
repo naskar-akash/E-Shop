@@ -67,7 +67,7 @@ export const addToCart = async ( productId, quantity ) => {
     quantity: quantity,
   });
   try {
-    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/cart`, data, {
+    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/cart/items`, data, {
       withCredentials: true,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -82,7 +82,7 @@ export const addToCart = async ( productId, quantity ) => {
 // Function to get cart items
 export const getCartItems = async ( userId ) => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/${userId}/cart`, {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/cart`, {
       withCredentials: true,
     });
     return response;

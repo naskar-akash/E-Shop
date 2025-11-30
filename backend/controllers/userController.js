@@ -1,4 +1,5 @@
 import userModel from "../models/user-model.js";
+import productModel from "../models/product-model.js"
 import genToken from "../utils/genToken.js";
 import bcrypt from "bcrypt";
 
@@ -99,6 +100,7 @@ export const addToCart = async (req, res) => {
 export const getCartItems = async (req, res) => {
   try {
     const user = await userModel.findById(req.user._id).populate('cart.product');
+    const product = await productModel.findById()
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
     } 

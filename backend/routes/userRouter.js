@@ -16,9 +16,9 @@ router.post("/logout", logoutUser)
 router.get("/profile",isLogged, getUser);
 
 // Route to add a product to cart
-router.post("/cart", isLogged, addToCart)
+router.post("/cart/items", isLogged, addToCart)
 
 // Route to get cart items
-router.get(":user/cart", isLogged, getCartItems);
+router.get("/cart", isLogged, getCartItems);
 
 export default router;

@@ -29,7 +29,7 @@ const CategoryPage = () => {
     try {
       const cartItem = async (product) => {
       const response = await addToCart(product._id, 1);
-      showAlert(response.data.message, "success", "success");
+      showAlert(response.data.message, "success", "error");
       navigate(`/cart`);
     }
     cartItem(product);
