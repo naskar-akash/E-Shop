@@ -80,7 +80,7 @@ export const addToCart = async ( productId, quantity ) => {
 }
 
 // Function to get cart items
-export const getCartItems = async ( userId ) => {
+export const getCartItems = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/cart`, {
       withCredentials: true,

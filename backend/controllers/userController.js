@@ -100,11 +100,17 @@ export const addToCart = async (req, res) => {
 export const getCartItems = async (req, res) => {
   try {
     const user = await userModel.findById(req.user._id).populate('cart.product');
-    const product = await productModel.findById()
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
     } 
-    return res.status(200).json({ cart: user.cart });
+    // Convert buffer to Base64
+    const formattedCarts = user.cart.map((item) => ({
+      ...item._doc,
+      image: item.product.image
+        ?  `data:${item.product.image.contentType};base64,${item.product.image.data.toString("base64")}`
+        : null,
+    }));
+    return res.status(200).json({ cart: formattedCarts });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
