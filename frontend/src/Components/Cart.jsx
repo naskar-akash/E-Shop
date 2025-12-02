@@ -56,11 +56,13 @@ const Cart = () => {
       {/* Cards */}
       <div className="w-full min-h-screen my-4 flex flex-col gap-3">
         {Array.isArray(products) && products.length > 0 ? (
-          products.map((i,idx) => (
-            <div
-              key={idx}
-              className="w-full min-h-[200px] bg-white shadow-xl rounded-2xl p-4 border border-gray-200 flex flex-row gap-4 hover:shadow-2xl transition-all"
-            >
+          products.map((i, idx) => {
+            const finalprice = i.product.price - ((i.product.price * i.product.discount) / 100);
+            return (
+              <div
+                key={idx}
+                className="w-full min-h-[200px] bg-white shadow-xl rounded-2xl p-4 border border-gray-200 flex flex-row gap-4 hover:shadow-2xl transition-all"
+              >
               {/* Product Image */}
               <div className="w-[20%] flex items-center justify-center bg-gray-100 rounded-xl overflow-hidden">
                 <img
@@ -76,9 +78,12 @@ const Cart = () => {
                   <h3 className="text-lg font-semibold truncate">
                     {i.product.name}
                   </h3>
-                  <p className="text-base text-gray-700 mt-1">
+                  <div className="flex items-center gap-3 mt-2">
+                  <p className="text-sm text-gray-700 mt-1 line-through">
                     ₹ {i.product.price}
                   </p>
+                  <p className="text-xl text-gray-800 font-semibold">₹ {finalprice}</p>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between mb-2">
@@ -105,10 +110,10 @@ const Cart = () => {
                       </button>
                     </div>
                   </div>
-                  {/* Total priice */}
+                  {/* Total price */}
                   <div className="text-right">
                     <p className="text-md text-gray-500">Total</p>
-                    <p className="text-lg font-bold">₹ {i.product.price * i.quantity}</p>
+                    <p className="text-lg font-bold">₹ {finalprice * i.quantity}</p>
                   </div>
                 </div>
                 {/* button */}
@@ -128,7 +133,7 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-          ))
+          )})
         ) : (
           <div className="w-full bg-white p-4 border border-gray-200 rounded-xl text-center text-gray-500">
             Your cart is empty.
