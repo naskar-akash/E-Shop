@@ -11,6 +11,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+    default: "Your Address"
+  },
+  pincode: {
+    type: String,
+    default: "Pincode"
+  },
   password: {
     type: String,
     required: true,

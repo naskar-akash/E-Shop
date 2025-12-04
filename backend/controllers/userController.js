@@ -1,5 +1,4 @@
 import userModel from "../models/user-model.js";
-import productModel from "../models/product-model.js"
 import genToken from "../utils/genToken.js";
 import bcrypt from "bcrypt";
 
@@ -32,6 +31,29 @@ export const registerUser = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+// Function to set up address of a user
+export const userAddress = async (req, res) => {
+  try {
+    const { address, pincode } = req.body;
+    if (!address || !pincode) {
+      return res.status(400).json({
+        message: "Address and Pincode are necessary",
+      });
+    }
+    const user = await userModel.findByIdAndUpdate(
+      req.user._id,
+      { address, pincode },
+      { new: true }
+    );
+    return res.status(200).json({
+      message: "Address set successfully!",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -70,12 +92,11 @@ export const logoutUser = (req, res) => {
 // Function to get a user
 export const getUser = async (req, res) => {
   try {
-    const user = await userModel.findOne({ email: req.body.email });
+    const user = await userModel.findOne({ email: req.user.email });
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
     } else {
       res.status(200).json(user);
-      console.log(req.params.name);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -99,19 +120,42 @@ export const addToCart = async (req, res) => {
 // Function to get cart items
 export const getCartItems = async (req, res) => {
   try {
-    const user = await userModel.findById(req.user._id).populate('cart.product');
+    const user = await userModel
+      .findById(req.user._id)
+      .populate("cart.product");
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
-    } 
+    }
     // Convert buffer to Base64
     const formattedCarts = user.cart.map((item) => ({
       ...item._doc,
       image: item.product.image
-        ?  `data:${item.product.image.contentType};base64,${item.product.image.data.toString("base64")}`
+        ? `data:${
+            item.product.image.contentType
+          };base64,${item.product.image.data.toString("base64")}`
         : null,
     }));
     return res.status(200).json({ cart: formattedCarts });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-}
+};
+
+// Function to remove cart items
+export const removeCartItems = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userModel.findById(req.user._id);
+    const cartById = user.cart.find((c) => c._id == id);
+    if (!cartById) {
+      return res.status(404).json({ message: "Item not found!" });
+    } else {
+      await userModel.findByIdAndUpdate(req.user._id, {
+        $pull: { cart: { _id: id } },
+      });
+      res.status(200).json({ message: "Item deleted successfully!" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
