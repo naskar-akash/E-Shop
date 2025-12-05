@@ -5,19 +5,35 @@ import {
   addToCart,
   removeCartItem,
   getUserProfile,
+  setUserAddress,
 } from "./Services/UserServices";
+import {useForm} from "react-hook-form";
 
 const Cart = () => {
   const { serverMsg, status, showAlert } = AlertMsg(2);
   const [products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
   const [userProfile, setUserProfile] = useState({
     username: "",
     address: "",
     pincode: "",
   });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // Function to set user address
-  const handleUserAddress = () => {};
+  // Submitting the form
+  const onSubmit = async (data) => {
+    try {
+      const response = await setUserAddress(data);
+      setOpen(false)
+      showAlert(response, "success", "error");
+    } catch (error) {
+      showAlert(error.response||error, "success", "error");
+    }
+  };
 
   // Hook to get user address
   useEffect(() => {
@@ -97,12 +113,77 @@ const Cart = () => {
             </p>
           </div>
           <button
-            onClick={() => handleUserAddress()}
+            onClick={() => setOpen(!open)}
             className="px-3 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition text-sm"
           >
             Change Address
           </button>
         </div>
+        {/* open a form to set up address */}
+        {open && (
+          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-2xl shadow-xl w-[90%] sm:w-[400px]">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
+                Update Address
+              </h2>
+
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                {/* Address */}
+                <div>
+                  <label className="text-sm text-gray-700">Address</label>
+                  <input
+                    type="text"
+                    {...register("address", {
+                      required: "Address is required",
+                    })}
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {errors.address && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.address.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Pincode */}
+                <div>
+                  <label className="text-sm text-gray-700">Pincode</label>
+                  <input
+                    type="text"
+                    {...register("pincode", {
+                      required: "Pincode is required", minLength: {value: 6, message: "set correct pincode"}
+                    })}
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {errors.pincode && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.pincode.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Buttons */}
+                <div className="flex justify-end gap-3 mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(!open)}
+                    className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit" 
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {/* Cards */}
         <div className="w-full min-h-screen my-4 flex flex-col gap-3">
           {Array.isArray(products) && products.length > 0 ? (
@@ -129,13 +210,16 @@ const Cart = () => {
                       <h3 className="text-lg font-semibold truncate">
                         {i.product.name}
                       </h3>
-                      <div className="flex items-center gap-3 mt-2">
-                        <p className="text-sm text-gray-700 mt-1 line-through">
+                      <div className="flex justify-items-start items-center gap-5 mt-2">
+                        <span className="text-sm text-gray-700 mt-1 line-through">
                           ₹ {i.product.price}
-                        </p>
-                        <p className="text-xl text-gray-800 font-semibold">
+                        </span>
+                        <span className="text-md font-medium text-gray-100 bg-cyan-600 rounded-full px-2 py-1">
+                          {i.product.discount}% Off
+                        </span>
+                        <span className="text-xl text-gray-700 text-shadow-md font-bold">
                           ₹ {finalprice}
-                        </p>
+                        </span>
                       </div>
                     </div>
 
@@ -166,11 +250,13 @@ const Cart = () => {
                         </div>
                       </div>
                       {/* Total price */}
-                      <div className="text-right">
-                        <p className="text-md text-gray-500">Total</p>
-                        <p className="text-lg font-bold">
+                      <div className="flex flex-col justify-end text-right">
+                        <span className="text-md font-medium text-gray-500">
+                          Total
+                        </span>
+                        <span className="text-xl font-bold text-gray-600 text-shadow-md">
                           ₹ {finalprice * i.quantity}
-                        </p>
+                        </span>
                       </div>
                     </div>
                     {/* button */}

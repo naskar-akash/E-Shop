@@ -23,6 +23,24 @@ export const registerUser = async (name, email, password, role) => {
   }
 };
 
+// Function to fetch set address API
+export const setUserAddress = async (_data) => {
+  try {
+    const data = qs.stringify({address: _data.address, pincode: _data.pincode})
+    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/address`,
+      data,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 //Function to fetch login user API
 export const loginUser = async (_data) => {
   try {
