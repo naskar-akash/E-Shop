@@ -10,6 +10,9 @@ import {
   getCartItems,
   removeCartItems,
   userAddress,
+  placeOrder,
+  viewOrder,
+  removeOrder
 } from "../controllers/userController.js";
 
 // Route to create a new user
@@ -35,5 +38,14 @@ router.get("/cart", isLogged, getCartItems);
 
 // Route to remove cart items
 router.delete("/cart/:id", isLogged, removeCartItems);
+
+// Route to place order
+router.post("/order/items", isLogged, placeOrder);
+
+// Route to view placed orders
+router.get("/order", isLogged, viewOrder)
+
+// Route to remove placed orders
+router.delete("/order/:id", isLogged, removeOrder)
 
 export default router;

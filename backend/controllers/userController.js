@@ -159,3 +159,40 @@ export const removeCartItems = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Function to place order
+export const placeOrder = async (req, res) => {
+  try {
+    const { productId, quantity, totalAmount, paymentMode, deliveryDate } =
+      req.body;
+    const user = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: {
+          orders: {
+            items: [
+              {
+                product: productId, 
+                quantity,
+              }
+            ],
+            totalAmount, paymentMode, deliveryDate,
+          }
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json({message: "Order placed successfully!"},user)
+    return res
+      .status(200)
+      .json({ message: "Order placed successfully!", user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Function to view placed order
+export const viewOrder = async (req, res) => {};
+
+// Function to remove placed order
+export const removeOrder = async (req, res) => {};

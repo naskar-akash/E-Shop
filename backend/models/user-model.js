@@ -34,10 +34,26 @@ const userSchema = new Schema({
     addedAt: { type: String, default: date },
     },
   ],
-  orders: {
-    type: Array,
-    default: [],
-  },
+  
+  orders: [
+    {
+      items:[
+        {
+          product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+          quantity: {type: Number, default: 1},
+        },
+      ],
+      totalAmount: Number,
+      paymentMode: {
+        type: String,
+        enum: ["cash", "UPI", "card"],
+        default: "cash",
+      },
+      orderDate: {type: String, default: date,},
+      deliveryDate: {type: String, required: true,},
+    },
+  ],
+
   joinedDate: {
     type: String,
     default: date,
