@@ -145,3 +145,18 @@ export const removeCartItem = async (id) => {
     throw new Error(error);
   }
 };
+
+// Function to view placed Orders
+export const viewOrder = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/order`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error);
+    
+  }
+};

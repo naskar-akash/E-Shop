@@ -192,7 +192,28 @@ export const placeOrder = async (req, res) => {
 };
 
 // Function to view placed order
-export const viewOrder = async (req, res) => {};
+export const viewOrder = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.id)
+    if (!user) return res.status(404).json({message: "Order not found"})
+      return res.status(200).json(user)
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+};
 
 // Function to remove placed order
-export const removeOrder = async (req, res) => {};
+export const removeOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull:{ orders: {_id: id}}
+      },
+      {new: true});
+      res.status(200).json({message: "Order removed successfully!"})
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+};
