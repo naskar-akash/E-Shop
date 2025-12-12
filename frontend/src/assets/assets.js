@@ -46,7 +46,10 @@ import vegGrapes from "./veg-grapes.jpg";
 import vegOnion from "./veg-onion.jpg";
 import vegPotato from "./veg-potato.jpg";
 import vegWatermelon from "./veg-watermelon.jpg";
-import logoLogin from "./logo-login.png"
+import logoLogin from "./logo-login.png";
+import payCash from "./pay-cash.svg";
+import payCard from "./pay-card.svg";
+import payOnline from "./pay-online.svg";
 
 export const assets = {
   beautyCreame,
@@ -98,4 +101,7 @@ export const assets = {
   vegPotato,
   vegWatermelon,
   logoLogin,
+  payCard,
+  payCash,
+  payOnline
 };

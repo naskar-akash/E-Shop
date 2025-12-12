@@ -13,11 +13,11 @@ const userSchema = new Schema({
   },
   address: {
     type: String,
-    default: "Your Address"
+    default: "Your Address",
   },
   pincode: {
     type: String,
-    default: "Pincode"
+    default: "Pincode",
   },
   password: {
     type: String,
@@ -29,28 +29,24 @@ const userSchema = new Schema({
   },
   cart: [
     {
-    product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
-    quantity: { type: Number, default: 1 },
-    addedAt: { type: String, default: date },
+      product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      quantity: { type: Number, default: 1 },
+      addedAt: { type: String, default: date },
     },
   ],
-  
+
   orders: [
     {
-      items:[
-        {
-          product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
-          quantity: {type: Number, default: 1},
-        },
-      ],
+      product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      quantity: { type: Number, default: 1 },
       totalAmount: Number,
       paymentMode: {
         type: String,
         enum: ["cash", "UPI", "card"],
         default: "cash",
       },
-      orderDate: {type: String, default: date,},
-      deliveryDate: {type: String, required: true,},
+      orderDate: { type: String, default: date },
+      deliveryDate: { type: String, required: true },
     },
   ],
 

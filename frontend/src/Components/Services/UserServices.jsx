@@ -146,6 +146,15 @@ export const removeCartItem = async (id) => {
   }
 };
 
+// Function to add items to order list
+export const placeOrder = async (_data) => {
+  try {
+    
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 // Function to view placed Orders
 export const viewOrder = async () => {
   try {
@@ -160,3 +169,7 @@ export const viewOrder = async () => {
     
   }
 };
+
+// Function to remove order from list
+export const removeOrder = async (req, res) => {}
+

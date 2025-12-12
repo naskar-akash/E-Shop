@@ -170,19 +170,16 @@ export const placeOrder = async (req, res) => {
       {
         $push: {
           orders: {
-            items: [
-              {
-                product: productId, 
-                quantity,
-              }
-            ],
-            totalAmount, paymentMode, deliveryDate,
-          }
+            product: productId,
+            quantity: Number(quantity),
+            totalAmount,
+            paymentMode,
+            deliveryDate,
+          },
         },
       },
       { new: true }
     );
-    res.status(200).json({message: "Order placed successfully!"},user)
     return res
       .status(200)
       .json({ message: "Order placed successfully!", user });
@@ -194,11 +191,27 @@ export const placeOrder = async (req, res) => {
 // Function to view placed order
 export const viewOrder = async (req, res) => {
   try {
-    const user = await userModel.findById(req.user.id)
-    if (!user) return res.status(404).json({message: "Order not found"})
-      return res.status(200).json(user)
+    const user = await userModel
+      .findById(req.user._id)
+      .populate("orders.product");
+    if (!user) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    // Convert buffer to base64
+    const formattedOrders = user.orders.map((item) => ({
+      ...item._doc,
+      product: {
+        ...item.product._doc,
+        image: item.product.image
+          ? `data:${
+              item.product.image.contentType
+            };base64,${item.product.image.data.toString("base64")}`
+          : null,
+      },
+    }));
+    return res.status(200).json({ orders: formattedOrders });
   } catch (error) {
-    res.status(500).json({message: error.message})
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -209,11 +222,12 @@ export const removeOrder = async (req, res) => {
     await userModel.findByIdAndUpdate(
       req.user._id,
       {
-        $pull:{ orders: {_id: id}}
+        $pull: { orders: { _id: id } },
       },
-      {new: true});
-      res.status(200).json({message: "Order removed successfully!"})
+      { new: true }
+    );
+    res.status(200).json({ message: "Order removed successfully!" });
   } catch (error) {
-    res.status(500).json({message: error.message})
+    res.status(500).json({ message: error.message });
   }
 };

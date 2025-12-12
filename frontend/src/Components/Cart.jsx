@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AlertMsg from "../Components/Services/AlertMsg";
 import {
   getCartItems,
@@ -10,6 +11,7 @@ import {
 import {useForm} from "react-hook-form";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const { serverMsg, status, showAlert } = AlertMsg(2);
   const [products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
@@ -86,6 +88,12 @@ const Cart = () => {
       showAlert(error.response || error, "success", "error");
     }
   };
+
+  // Function to place order
+  const buyNow = (i) => {
+    console.log(i.product._id, i.quantity)
+    navigate("/order")
+  }
 
   return (
     <>
@@ -268,7 +276,7 @@ const Cart = () => {
                         Remove
                       </button>
                       <button
-                        // onClick={() => buyNow(item)}
+                        onClick={() => buyNow(i)}
                         className="w-1/2 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition"
                       >
                         Buy Now
