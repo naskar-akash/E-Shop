@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { viewOrder } from "./Services/UserServices";
-import AlertMsg from "./Services/AlertMsg";
-import {assets} from "../assets/assets";
+import { viewOrder } from "../Services/UserServices";
+import AlertMsg from "../Services/AlertMsg";
+import {assets} from "../../assets/assets";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
   const { serverMsg, status, showAlert } = AlertMsg(2);
 
+  // Hook to render orders on load
   useEffect(() => {
     const getOrders = async () => {
       try {
         const response = await viewOrder();
         const ord = response?.data?.orders || [];
-        console.log(ord);
         setOrders(ord);
       } catch (error) {
         showAlert(error.response || error, "success", "error");

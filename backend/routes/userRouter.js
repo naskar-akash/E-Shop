@@ -40,7 +40,7 @@ router.get("/cart", isLogged, getCartItems);
 router.delete("/cart/:id", isLogged, removeCartItems);
 
 // Route to place order
-router.post("/order/items", isLogged, placeOrder);
+router.post("/order/:id", isLogged, placeOrder);
 
 // Route to view placed orders
 router.get("/order", isLogged, viewOrder)

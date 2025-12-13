@@ -10,7 +10,8 @@ import Signup from "./Components/Signup.jsx";
 import CategoryPage from "./Components/Subnavcomponents/CategoryPage.jsx";
 import AdminHome from "./Components/Admin/AdminHome.jsx";
 import CreateProducts from "./Components/Admin/CreateProduct.jsx";
-import Order from "./Components/Order.jsx";
+import Order from "./Components/Payment/Order.jsx";
+import PaymentForm from "./Components/Payment/PaymentForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "/cart", element: <Cart /> },
       { path: "/order", element: <Order /> },
+      { path: `/payment/:id`, element: <PaymentForm/> },
       { path: "admin", element: <AdminHome /> },
       { path: "admin/create", element: <CreateProducts /> },
       { path: "login/signup", element: <Signup /> },

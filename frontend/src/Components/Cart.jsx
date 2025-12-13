@@ -91,8 +91,7 @@ const Cart = () => {
 
   // Function to place order
   const buyNow = (i) => {
-    console.log(i.product._id, i.quantity)
-    navigate("/order")
+    navigate(`/payment/${i.product._id}?qty=${i.quantity}`);
   }
 
   return (

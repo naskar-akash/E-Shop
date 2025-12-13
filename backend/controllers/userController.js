@@ -163,14 +163,14 @@ export const removeCartItems = async (req, res) => {
 // Function to place order
 export const placeOrder = async (req, res) => {
   try {
-    const { productId, quantity, totalAmount, paymentMode, deliveryDate } =
-      req.body;
+    const { id } = req.params;
+    const { quantity, totalAmount, paymentMode, deliveryDate } = req.body;
     const user = await userModel.findByIdAndUpdate(
       req.user._id,
       {
         $push: {
           orders: {
-            product: productId,
+            product: id,
             quantity: Number(quantity),
             totalAmount,
             paymentMode,

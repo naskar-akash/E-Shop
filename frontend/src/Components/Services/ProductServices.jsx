@@ -45,6 +45,19 @@ export const getAllProducts = async () => {
   }
 };
 
+// Function to show product by id
+export const productById  = async (id) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/product/${id}`,
+      { withCredentials: true }
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error?.response?.data?.message || error.message || "Request failed!");
+  }
+}
+
 // Function to remove a product by id
 export const removeProducts = async (id) => {
   try {
