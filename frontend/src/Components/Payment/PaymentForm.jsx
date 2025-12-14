@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate,useParams, useSearchParams } from "react-router-dom";
 import { set, useForm } from "react-hook-form";
 import { assets } from "../../assets/assets";
 import { productById } from "../Services/ProductServices";
 import { getUserProfile, placeOrder } from "../Services/UserServices";
 
 const PaymentForm = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const [userProfile, setUserProfile] = useState({
@@ -26,7 +27,6 @@ const PaymentForm = () => {
   useEffect(() => {
     const fetchProductDetails = async (id, qty) => {
       const response = await productById(id);
-      console.log(response.data, qty);
       setProduct(response.data);
     };
     fetchProductDetails(id, qty);
@@ -54,21 +54,29 @@ const PaymentForm = () => {
     (product.price - product.price * (product.discount / 100)) * qty;
   // Delivery charge
   const deliveryCharge =
-    product.price >= 500
+    totalPrice >= 500
       ? 0
-      : product.price >= 300 && product.price < 500
-      ? product.price * 0.05
+      : totalPrice >= 300 && totalPrice < 500
+      ? totalPrice * 0.05
       : 15;
 
+      // Function to place order
   const onSubmit = async (data) => {
     const finalData = {
       paymentMode,
       ...data,
     };
-    console.log("Payment Data:", finalData);
     try {
-      const response = await placeOrder({quantity: qty, totalPrice: totalPrice + deliveryCharge + 25, ...finalData, addDay: 7});
-      console.log(response);
+      const dataToSend = {
+        id: id,
+        quantity: qty,
+        totalAmount: totalPrice + deliveryCharge + 25,
+        paymentMode: finalData.paymentMode,
+        addDay: 7,
+      };
+      const response = await placeOrder(dataToSend);
+      alert(`${response.data.message}`);
+      navigate("/cart")
     } catch (error) {
       alert("Order placement failed. Please try again.");
     }
@@ -167,14 +175,14 @@ const PaymentForm = () => {
 
             {/* CASH */}
             {paymentMode === "cash" && (
-                <div className="flex flex-col justify-start">
-                  <p className="text-lg text-gray-600 font-semibold">
-                    Delivered to: {userProfile.username} 
-                  </p>
-                  <p className="text-md font-medium text-stone-500">
-                    {userProfile.address}, Pin -{" "}{userProfile.pincode}
-                  </p>
-                </div>
+              <div className="flex flex-col justify-start">
+                <p className="text-lg text-gray-600 font-semibold">
+                  Delivered to: {userProfile.username}
+                </p>
+                <p className="text-md font-medium text-stone-500">
+                  {userProfile.address}, Pin - {userProfile.pincode}
+                </p>
+              </div>
             )}
 
             {/* CARD */}
@@ -183,7 +191,10 @@ const PaymentForm = () => {
                 <input
                   {...register("cardNumber", {
                     required: "Card number required",
-                    minLength: {value:16, message: "Card number must be 16 digits"},
+                    minLength: {
+                      value: 16,
+                      message: "Card number must be 16 digits",
+                    },
                   })}
                   placeholder="Card Number"
                   className="w-full border rounded-lg p-2"
@@ -200,19 +211,27 @@ const PaymentForm = () => {
                     className="w-1/2 border rounded-lg p-2"
                   />
                   <div className="flex flex-col">
-                  <input
-                    {...register("cvv", {
-                      required: true,
-                      minLength: {value:3, message: "CVV must be 3 digits"},
-                      maxLength: {value:3, message: "CVV must be 3 digits"},
-                    })}
-                    placeholder="CVV"
-                    className="w-1/2 border rounded-lg p-2"
-                  />
-                {errors.cvv && (
-                  <p className="text-red-500 text-xs">{errors.cvv.message}</p>
-                )}
-                </div>
+                    <input
+                      {...register("cvv", {
+                        required: true,
+                        minLength: {
+                          value: 3,
+                          message: "CVV must be 3 digits",
+                        },
+                        maxLength: {
+                          value: 3,
+                          message: "CVV must be 3 digits",
+                        },
+                      })}
+                      placeholder="CVV"
+                      className="w-1/2 border rounded-lg p-2"
+                    />
+                    {errors.cvv && (
+                      <p className="text-red-500 text-xs">
+                        {errors.cvv.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <input
                   {...register("cardHolder", { required: true })}

@@ -39,7 +39,7 @@ const userSchema = new Schema({
     {
       product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
       quantity: { type: Number, default: 1 },
-      totalAmount: Number,
+      totalAmount: { type: Number, required: true },
       paymentMode: {
         type: String,
         enum: ["cash", "UPI", "card"],

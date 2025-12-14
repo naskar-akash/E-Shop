@@ -150,7 +150,7 @@ export const removeCartItem = async (id) => {
 export const placeOrder = async (_data) => {
   try {
     const data = qs.stringify({
-      quantity: _data.quantity, totalprice: _data.totalPrice, paymentMode: _data.paymentMode, addDay: _data.addDay
+      quantity: _data.quantity, totalAmount: _data.totalAmount, paymentMode: _data.paymentMode, addDay: _data.addDay
     });
     const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/order/${_data.id}`,
       data,

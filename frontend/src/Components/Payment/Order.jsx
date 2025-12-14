@@ -107,7 +107,7 @@ const Order = () => {
                       <div className="flex flex-row gap-3">
                         <span className="text-gray-500">Total Pay:</span>
                         <p className="font-semibold text-gray-800">
-                          ₹{finalprice * i.quantity}
+                          ₹{i.totalAmount}
                         </p>
                       </div>
 
