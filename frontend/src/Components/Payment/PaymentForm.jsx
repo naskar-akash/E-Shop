@@ -1,12 +1,18 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { set, useForm } from "react-hook-form";
 import { assets } from "../../assets/assets";
 import { productById } from "../Services/ProductServices";
+import { getUserProfile, placeOrder } from "../Services/UserServices";
 
 const PaymentForm = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
+  const [userProfile, setUserProfile] = useState({
+    username: "",
+    address: "",
+    pincode: "",
+  });
   const qty = Number(searchParams.get("qty"));
   const [paymentMode, setPaymentMode] = useState("cash");
   const [product, setProduct] = useState([]);
@@ -18,28 +24,63 @@ const PaymentForm = () => {
 
   // Hook to render product details
   useEffect(() => {
-    const fetchProductDetails = async (id,qty) => {
+    const fetchProductDetails = async (id, qty) => {
       const response = await productById(id);
-      console.log(response.data,qty)
+      console.log(response.data, qty);
       setProduct(response.data);
-    }
-    fetchProductDetails(id,qty);
+    };
+    fetchProductDetails(id, qty);
   }, []);
-  
 
-  const onSubmit = (data) => {
+  // Hook to get user address
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await getUserProfile();
+        setUserProfile({
+          username: response.data.name,
+          address: response.data.address,
+          pincode: response.data.pincode,
+        });
+      } catch (error) {
+        showAlert(error.response || response, "success", "error");
+      }
+    };
+    getUser();
+  }, []);
+
+  // Calculate total price
+  const totalPrice =
+    (product.price - product.price * (product.discount / 100)) * qty;
+  // Delivery charge
+  const deliveryCharge =
+    product.price >= 500
+      ? 0
+      : product.price >= 300 && product.price < 500
+      ? product.price * 0.05
+      : 15;
+
+  const onSubmit = async (data) => {
     const finalData = {
       paymentMode,
       ...data,
     };
     console.log("Payment Data:", finalData);
+    try {
+      const response = await placeOrder({quantity: qty, totalPrice: totalPrice + deliveryCharge + 25, ...finalData, addDay: 7});
+      console.log(response);
+    } catch (error) {
+      alert("Order placement failed. Please try again.");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10">
       {/* PAGE HEADING */}
       <div className="max-w-5xl mx-auto mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 text-shadow-md">Payment</h1>
+        <h1 className="text-3xl font-bold text-gray-900 text-shadow-md">
+          Payment
+        </h1>
       </div>
       {/* Main Card */}
       <div className="flex items-center justify-center">
@@ -65,15 +106,19 @@ const PaymentForm = () => {
             <div className="border-t pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>₹1,200</span>
+                <span>₹{totalPrice}</span>
               </div>
               <div className="flex justify-between">
-                <span>Shipping</span>
-                <span>₹50</span>
+                <span>Delivery Charge</span>
+                <span>₹{deliveryCharge}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Platform fee</span>
+                <span>₹25</span>
               </div>
               <div className="flex justify-between font-semibold text-base">
                 <span>Total</span>
-                <span>₹1,250</span>
+                <span>₹{totalPrice + deliveryCharge + 25}</span>
               </div>
             </div>
           </div>
@@ -122,34 +167,14 @@ const PaymentForm = () => {
 
             {/* CASH */}
             {paymentMode === "cash" && (
-              <div className="space-y-3">
-                <h3 className="font-semibold">Delivery Address</h3>
-
-                <input
-                  {...register("address", { required: "Address is required" })}
-                  placeholder="Full Address"
-                  className="w-full border rounded-lg p-2"
-                />
-                {errors.address && (
-                  <p className="text-red-500 text-sm">
-                    {errors.address.message}
+                <div className="flex flex-col justify-start">
+                  <p className="text-lg text-gray-600 font-semibold">
+                    Delivered to: {userProfile.username} 
                   </p>
-                )}
-
-                <input
-                  {...register("pincode", {
-                    required: "Pincode is required",
-                    minLength: { value: 6, message: "Invalid pincode" },
-                  })}
-                  placeholder="Pincode"
-                  className="w-full border rounded-lg p-2"
-                />
-                {errors.pincode && (
-                  <p className="text-red-500 text-sm">
-                    {errors.pincode.message}
+                  <p className="text-md font-medium text-stone-500">
+                    {userProfile.address}, Pin -{" "}{userProfile.pincode}
                   </p>
-                )}
-              </div>
+                </div>
             )}
 
             {/* CARD */}
@@ -158,29 +183,37 @@ const PaymentForm = () => {
                 <input
                   {...register("cardNumber", {
                     required: "Card number required",
-                    minLength: 16,
+                    minLength: {value:16, message: "Card number must be 16 digits"},
                   })}
                   placeholder="Card Number"
                   className="w-full border rounded-lg p-2"
                 />
-
+                {errors.cardNumber && (
+                  <p className="text-red-500 text-xs">
+                    {errors.cardNumber.message}
+                  </p>
+                )}
                 <div className="flex gap-3">
                   <input
                     {...register("expiry", { required: true })}
-                    placeholder="MM/YY"
+                    placeholder="Expiry mm/yy"
                     className="w-1/2 border rounded-lg p-2"
                   />
+                  <div className="flex flex-col">
                   <input
                     {...register("cvv", {
                       required: true,
-                      minLength: 3,
-                      maxLength: 3,
+                      minLength: {value:3, message: "CVV must be 3 digits"},
+                      maxLength: {value:3, message: "CVV must be 3 digits"},
                     })}
                     placeholder="CVV"
                     className="w-1/2 border rounded-lg p-2"
                   />
+                {errors.cvv && (
+                  <p className="text-red-500 text-xs">{errors.cvv.message}</p>
+                )}
                 </div>
-
+                </div>
                 <input
                   {...register("cardHolder", { required: true })}
                   placeholder="Card Holder Name"
@@ -198,7 +231,7 @@ const PaymentForm = () => {
                   className="w-full border rounded-lg p-2"
                 />
                 {errors.upiId && (
-                  <p className="text-red-500 text-sm">{errors.upiId.message}</p>
+                  <p className="text-red-500 text-xs">{errors.upiId.message}</p>
                 )}
 
                 <select
@@ -208,7 +241,7 @@ const PaymentForm = () => {
                   <option value="">Select Bank</option>
                   <option value="SBI">SBI</option>
                   <option value="HDFC">HDFC</option>
-                  <option value="ICICI">ICICI</option>
+                  <option value="ICICI">Indian Bank</option>
                 </select>
               </div>
             )}
@@ -218,7 +251,7 @@ const PaymentForm = () => {
               type="submit"
               className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition"
             >
-              Pay ₹1,250
+              ₹{totalPrice + deliveryCharge + 25}
             </button>
           </form>
         </div>

@@ -1,6 +1,8 @@
 import userModel from "../models/user-model.js";
 import genToken from "../utils/genToken.js";
 import bcrypt from "bcrypt";
+import deliveryDate from '../utils/deliveryDate.js';
+import dateTime from "../utils/dateTime.js";
 
 // Function to register a new user
 export const registerUser = async (req, res) => {
@@ -163,8 +165,9 @@ export const removeCartItems = async (req, res) => {
 // Function to place order
 export const placeOrder = async (req, res) => {
   try {
+    const { date, time } = dateTime();
     const { id } = req.params;
-    const { quantity, totalAmount, paymentMode, deliveryDate } = req.body;
+    const { quantity, totalAmount, paymentMode, addDay } = req.body;
     const user = await userModel.findByIdAndUpdate(
       req.user._id,
       {
@@ -174,7 +177,8 @@ export const placeOrder = async (req, res) => {
             quantity: Number(quantity),
             totalAmount,
             paymentMode,
-            deliveryDate,
+            orderDate: `${date} ${time}`,
+            deliveryDate: deliveryDate(date,addDay),
           },
         },
       },
@@ -182,7 +186,7 @@ export const placeOrder = async (req, res) => {
     );
     return res
       .status(200)
-      .json({ message: "Order placed successfully!", user });
+      .json({ message: "Order placed successfully! Check your orders!", user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

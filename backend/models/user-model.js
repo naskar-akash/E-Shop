@@ -45,7 +45,7 @@ const userSchema = new Schema({
         enum: ["cash", "UPI", "card"],
         default: "cash",
       },
-      orderDate: { type: String, default: date },
+      orderDate: String,
       deliveryDate: { type: String, required: true },
     },
   ],
