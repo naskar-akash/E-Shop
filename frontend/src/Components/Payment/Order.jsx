@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { viewOrder } from "../Services/UserServices";
+import { viewOrder,removeOrder } from "../Services/UserServices";
 import AlertMsg from "../Services/AlertMsg";
 import { assets } from "../../assets/assets";
 
@@ -50,8 +50,29 @@ const Order = () => {
     }
   };
 
+  // Function to handle order removal
+  const handleRemoveOrder = async (id) => {
+    try {
+      const response = await removeOrder(id);
+      showAlert(response.data.message, "success", "error");
+    } catch (error) {
+      showAlert(error.response || error, "success", "error");
+    }
+  }
+
   return (
     <div className="flex flex-col px-4 py-6 max-w-7xl mx-auto">
+      {/*Showing flash message*/}
+        {serverMsg && (
+          <div
+            className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+              status === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
+            style={{ transform: "translate(-50%, -50%)" }}
+          >
+            {serverMsg}
+          </div>
+        )}
       <h1 className="w-full text-3xl font-bold text-center mb-6">
         Your Orders
       </h1>
@@ -75,7 +96,7 @@ const Order = () => {
                     />
                   </div>
                   <button
-                    onClick={() => console.log("remove")}
+                    onClick={()=>handleRemoveOrder(i._id)}
                     className="px-3 py-2 bg-rose-600 text-sm text-white font-medium rounded-lg hover:bg-rose-500 transition"
                   >
                     Remove Order
@@ -135,7 +156,7 @@ const Order = () => {
                     </div>
                   </div>
 
-                  {/* Dates + Remove */}
+                  {/* Dates */}
                   <div className="flex justify-between items-center mt-3 text-sm px-4">
                     <div>
                       <span className="text-gray-500">Placed On:</span>{" "}

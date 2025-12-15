@@ -42,7 +42,7 @@ const userSchema = new Schema({
       totalAmount: { type: Number, required: true },
       paymentMode: {
         type: String,
-        enum: ["cash", "UPI", "card"],
+        enum: ["cash", "online", "card"],
         default: "cash",
       },
       orderDate: String,
