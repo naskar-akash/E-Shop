@@ -1,14 +1,13 @@
 import React from "react";
+import { NavLink,useNavigate } from "react-router-dom";
 import { CiMail } from "react-icons/ci";
-import { SlSocialYoutube } from "react-icons/sl";
-import { TiSocialFacebook } from "react-icons/ti";
-import { SlSocialInstagram } from "react-icons/sl";
 import { TiSocialGithub } from "react-icons/ti";
 import { TiSocialLinkedin } from "react-icons/ti";
 import { SlSocialGithub } from "react-icons/sl";
 import { CiShop } from "react-icons/ci";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full min-h-[35vh] relative bottom-0 bg-black/90 p-10 mt-8">
       <div className="flex justify-between border-b-1 border-gray-600 pb-5">
@@ -42,29 +41,75 @@ const Footer = () => {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
             <p className="text-sm text-stone-500">Mail Us:</p>
-            <p className="flex flex-col text-white text-xs font-bold gap-1">
-              mail@mail.com
-            </p>
+            <a
+              href="https://mail.google.com/mail/?view=cm&to=eshop.akash@gmail.com"
+              target="blank"
+              rel="noopener noreferrer"
+              aria-label="Email"
+            >
+              <p className="flex flex-col text-white text-xs font-bold gap-1 hover:underline">
+                eshop.akash@gmail.com
+              </p>
+            </a>
           </div>
           <div className="flex flex-col gap-4">
             <p className="text-sm text-stone-500">Social:</p>
             <div className="flex justify-center gap-2 text-white text-lg">
-              <CiMail />
-              <SlSocialYoutube />
-              <TiSocialFacebook />
-              <SlSocialInstagram />
+              <a
+                href="https://mail.google.com/mail/?view=cm&to=eshop.akash@gmail.com"
+                className="hover:text-blue-500 transition"
+                target="blank"
+                rel="noopener noreferrer"
+                aria-label="Email"
+              >
+                <CiMail />
+              </a>
+              <a
+                href="https://github.com/naskar-akash?tab=repositories"
+                className="hover:text-red-600 transition"
+                target="blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub Repository"
+              >
+                <SlSocialGithub />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/akash-naskar-82b332373/"
+                className="hover:text-teal-500 transition"
+                target="blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
+              >
+                <TiSocialLinkedin />
+              </a>
             </div>
           </div>
         </div>
       </div>
       <div className="text-white flex justify-evenly items-center gap-8 py-4">
-        <div className="flex justify-center items-center gap-1">
-          <CiShop className="size-5 my-1 text-amber-400"/>
+        <div className="flex justify-center items-center gap-1 hover:underline cursor-pointer" onClick={() => navigate('/admin/create')}>
+          <CiShop className="size-5 my-1 text-amber-400" />
           <p className="">Become a seller</p>
         </div>
-        <SlSocialGithub className="size-6 text-yellow-300"/>
-        <TiSocialGithub className="size-6"/>
-        <TiSocialLinkedin className="size-6 text-blue-500"/>
+        <a
+          href="https://github.com/naskar-akash?tab=repositories"
+          className="text-yellow-300 hover:text-white transition"
+          target="blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub Repository"
+        >
+          <SlSocialGithub className="size-6" />
+        </a>
+        <TiSocialGithub className="size-6" />
+        <a
+          href="https://www.linkedin.com/in/akash-naskar-82b332373/"
+          className="text-blue-500 hover:text-white transition"
+          target="blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn Profile"
+        >
+          <TiSocialLinkedin className="size-6" />
+        </a>
         <p>&copy; 2025 E-Shop </p>
       </div>
     </div>
