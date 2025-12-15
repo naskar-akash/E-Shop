@@ -183,5 +183,14 @@ export const viewOrder = async () => {
 };
 
 // Function to remove order from list
-export const removeOrder = async (req, res) => {}
+export const removeOrder = async (id) => {
+  try {
+    const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/user/order/${id}`,
+      { withCredentials: true }
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 

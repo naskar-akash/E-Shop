@@ -66,6 +66,7 @@ const PaymentForm = () => {
       paymentMode,
       ...data,
     };
+    console.log(finalData);
     try {
       const dataToSend = {
         id: id,

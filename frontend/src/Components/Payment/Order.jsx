@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { viewOrder } from "../Services/UserServices";
 import AlertMsg from "../Services/AlertMsg";
-import {assets} from "../../assets/assets";
+import { assets } from "../../assets/assets";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -25,15 +25,30 @@ const Order = () => {
   const payMode = (mode) => {
     switch (mode) {
       case "cash":
-        return <img src={assets.payCash} alt="Cash" className="w-6 h-5" />;
+        return (
+          <div className="flex gap-2 items-center">
+            <img src={assets.payCash} alt="Cash" className="w-6 h-5" />
+            <span className="font-semibold text-xs">Cash</span>
+          </div>
+        );
       case "card":
-        return <img src={assets.payCard} alt="Card" className="w-6 h-5" />;
-      case "UPI":
-        return <img src={assets.payOnline} alt="Online" className="w-6 h-5" />;
+        return (
+          <div className="flex gap-2 items-center">
+            <img src={assets.payCard} alt="Cash" className="w-6 h-5" />
+            <span className="font-semibold text-xs">Card</span>
+          </div>
+        );
+      case "online":
+        return (
+          <div className="flex gap-2 items-center">
+            <img src={assets.payOnline} alt="Cash" className="w-6 h-5" />
+            <span className="font-semibold text-xs">Online</span>
+          </div>
+        );
       default:
-        return '---';
+        return "---";
     }
-  }
+  };
 
   return (
     <div className="flex flex-col px-4 py-6 max-w-7xl mx-auto">
@@ -52,19 +67,19 @@ const Order = () => {
               >
                 {/* Product Image */}
                 <div className="flex flex-col justify-evenly">
-                <div className="w-[120px] h-[120px] bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-200">
-                  <img
-                    src={i.product.image}
-                    alt={i.product.name}
-                    className="object-contain w-full h-full p-3"
-                  />
-                </div>
-                <button
-                      onClick={() => console.log("remove")}
-                      className="px-3 py-2 bg-rose-600 text-sm text-white font-medium rounded-lg hover:bg-rose-500 transition"
-                    >
-                      Remove Order
-                    </button>
+                  <div className="w-[120px] h-[120px] bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-200">
+                    <img
+                      src={i.product.image}
+                      alt={i.product.name}
+                      className="object-contain w-full h-full p-3"
+                    />
+                  </div>
+                  <button
+                    onClick={() => console.log("remove")}
+                    className="px-3 py-2 bg-rose-600 text-sm text-white font-medium rounded-lg hover:bg-rose-500 transition"
+                  >
+                    Remove Order
+                  </button>
                 </div>
 
                 {/* Right Section */}
@@ -114,7 +129,7 @@ const Order = () => {
                       <div className="flex flex-row gap-3">
                         <span className="text-gray-500">Payment:</span>
                         <div className="font-semibold text-gray-800">
-                         {payMode(i.paymentMode)}
+                          {payMode(i.paymentMode)}
                         </div>
                       </div>
                     </div>

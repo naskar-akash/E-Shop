@@ -95,7 +95,6 @@ const Cart = () => {
   }
 
   return (
-    <>
       <div className="flex flex-col px-4 py-6 max-w-7xl mx-auto">
         {/*Showing flash message*/}
         {serverMsg && (
@@ -292,17 +291,6 @@ const Cart = () => {
           )}
         </div>
       </div>
-      {/* display total */}
-      <div className="sticky bottom-0 left-0  w-full flex justify-between px-6 py-4 bg-gray-700 mt-4">
-        <button className="px-6 py-3 bg-blue-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition">
-          Buy Now
-        </button>
-        <div className="flex justify-center items-center gap-8">
-          <p className="text-2xl font-bold text-stone-50">Total:</p>
-          <p className="text-2xl font-bold text-stone-100">₹ 12000</p>
-        </div>
-      </div>
-    </>
   );
 };
 
