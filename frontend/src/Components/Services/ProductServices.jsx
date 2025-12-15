@@ -30,8 +30,22 @@ export const createProducts = async (_data) => {
   }
 };
 
-// Function to show all created products by an admin
+// Function to show all products other than admin
 export const getAllProducts = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/product/`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    throw new Error(
+      error?.response?.data?.message || error.message || "Request failed!"
+    );
+  }
+};
+
+// Function to show all created products by an admin
+export const getAllProductsAdmin = async () => {
   try {
     const response = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/admin/`,

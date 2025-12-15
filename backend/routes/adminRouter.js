@@ -1,12 +1,12 @@
 import { Router } from 'express';
 const router = Router();
-import { getAllProducts,createProducts, removeProducts } from '../controllers/productController.js';
+import { getAllProductsAdmin,createProducts, removeProducts } from '../controllers/productController.js';
 import isAdmin from '../middleware/isAdmin.js'
 import isLogged from '../middleware/isLogged.js'
 import upload from "../config/multer-config.js"
 
 // Route to show all created products by an admin
-router.get("/", isLogged, isAdmin, getAllProducts)
+router.get("/", isLogged, isAdmin, getAllProductsAdmin)
 
 // Route to create products
 router.post("/create", isLogged, isAdmin, upload.single("image"), createProducts)

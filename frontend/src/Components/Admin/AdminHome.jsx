@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllProducts, removeProducts } from "../Services/ProductServices";
+import { getAllProductsAdmin, removeProducts } from "../Services/ProductServices";
 import AlertMsg from "../Services/AlertMsg";
 
 const AdminHome = () => {
@@ -8,7 +8,7 @@ const AdminHome = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await getAllProducts();
+        const response = await getAllProductsAdmin();
         setProducts(response.data);
       } catch (error) {
         showAlert(error.response || error, "success", "error");

@@ -1,7 +1,7 @@
 import productModel from "../models/product-model.js";
 
 // Gettinng all products
-export const getAllProducts = async (req, res) => {
+export const getAllProductsAdmin = async (req, res) => {
   try {
     const products = await productModel.find();
     if (!products)
@@ -13,7 +13,6 @@ export const getAllProducts = async (req, res) => {
         ?  `data:${product.image.contentType};base64,${product.image.data.toString("base64")}`
         : null,
     }));
-
     res.status(200).json(formattedProducts);
   } catch (error) {
     return res.status(500).json({ message: error.message });
