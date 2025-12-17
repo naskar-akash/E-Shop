@@ -1,36 +1,56 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { assets } from "../assets/assets";
-
-const images = [assets.vegCombo1, assets.electPhone3, assets.beautyPerfume, assets.toySoft, assets.paint11];
+import { getAllProducts } from "./Services/ProductServices.jsx";
 
 const Imageslider = () => {
+  const [images, setImages] = useState([]);
+  const [randomImages, setRandomImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Hook to render images from database
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((i) => (i + 1) % images.length);
-    }, 2000);
-    return () => {
-      clearInterval(interval);
+    const fetchImages = async () => {
+      const response = await getAllProducts();
+      const img = response.data.map((item) => item.image);
+      setImages(img);
     };
+    fetchImages();
   }, []);
+
+  // Hook to get 5 random images
+  useEffect(() => {
+    if (images.length >= 5) {
+      const shuffled = [...images].sort(() => 0.5 - Math.random());
+      setRandomImages(shuffled.slice(0, 5));
+      setCurrentIndex(0);
+    }
+  }, [images]);
+
+  // Auto slide every 2 seconds
+  useEffect(() => {
+    if (randomImages.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % randomImages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [randomImages]);
 
   return (
     <div className="w-full flex justify-center items-center px-4">
       <div className="w-full max-w-6xl h-[40vh] flex flex-col pt-2 overflow-hidden relative">
         {/*Slider container*/}
-        <div
-          className="w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="w-full h-full flex items-center justify-center overflow-hidden">
+          {randomImages.length > 0 && (
             <img
-              src={images[currentIndex]}
+              src={randomImages[currentIndex]}
               alt="slider"
               className="w-full h-full object-fill transition-all duration-500 rounded-xl shadow-lg"
             />
+          )}
         </div>
         {/*Dots navigation*/}
         <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
-          {images.map((_, i) => (
+          {randomImages.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
