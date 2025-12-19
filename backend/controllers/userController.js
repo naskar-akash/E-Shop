@@ -70,7 +70,12 @@ export const loginUser = async (req, res) => {
       if (err) return res.json({ message: err.message });
       if (result) {
         let token = genToken(user);
-        res.cookie("token", token);
+        res.cookie("token", token,{
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "none", // if frontend and backend are on different domains
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
         res.status(201).json({ message: "Logged in!", user });
       } else {
         res.status(401).json({ message: "Email or Password incorrect!" });
