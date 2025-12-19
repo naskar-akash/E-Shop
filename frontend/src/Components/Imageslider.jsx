@@ -37,14 +37,14 @@ const Imageslider = () => {
 
   return (
     <div className="w-full flex justify-center items-center px-4">
-      <div className="w-full max-w-6xl h-[40vh] flex flex-col pt-2 overflow-hidden relative">
+      <div className="w-full max-w-6xl h-[45vh] flex flex-col justify-content-center items-center pt-2 overflow-hidden relative">
         {/*Slider container*/}
-        <div className="w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="w-[80%] py-2 h-full flex items-center justify-center overflow-hidden bg-sky-200 rounded-xl ">
           {randomImages.length > 0 && (
             <img
               src={randomImages[currentIndex]}
               alt="slider"
-              className="w-full h-full object-fill transition-all duration-500 rounded-xl shadow-lg"
+              className="w-[60%] h-[95%] object-fill transition-all duration-500 rounded-xl shadow-gray-600 shadow-lg"
             />
           )}
         </div>

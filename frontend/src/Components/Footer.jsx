@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CiMail } from "react-icons/ci";
 import { TiSocialGithub } from "react-icons/ti";
 import { TiSocialLinkedin } from "react-icons/ti";
@@ -52,7 +52,7 @@ const Footer = () => {
               </p>
             </a>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-row gap-4">
             <p className="text-sm text-stone-500">Social:</p>
             <div className="flex justify-center gap-2 text-white text-lg">
               <a
@@ -87,7 +87,10 @@ const Footer = () => {
         </div>
       </div>
       <div className="text-white flex justify-evenly items-center gap-8 py-4">
-        <div className="flex justify-center items-center gap-1 hover:underline cursor-pointer" onClick={() => navigate('/admin/create')}>
+        <div
+          className="flex justify-center items-center gap-1 hover:underline cursor-pointer"
+          onClick={() => navigate("/admin/create")}
+        >
           <CiShop className="size-5 my-1 text-amber-400" />
           <p className="">Become a seller</p>
         </div>
@@ -100,7 +103,15 @@ const Footer = () => {
         >
           <SlSocialGithub className="size-6" />
         </a>
-        <TiSocialGithub className="size-6" />
+        <a
+          href="https://github.com/naskar-akash/E-Shop.git"
+          className="text-pink-400 hover:text-white transition"
+          target="blank"
+          rel="noopener noreferrer"
+          aria-label="Project GitHub Repository"
+        >
+          <TiSocialGithub className="size-6" />
+        </a>
         <a
           href="https://www.linkedin.com/in/akash-naskar-82b332373/"
           className="text-blue-500 hover:text-white transition"
