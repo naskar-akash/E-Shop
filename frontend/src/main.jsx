@@ -12,6 +12,8 @@ import AdminHome from "./Components/Admin/AdminHome.jsx";
 import CreateProducts from "./Components/Admin/CreateProduct.jsx";
 import Order from "./Components/Payment/Order.jsx";
 import PaymentForm from "./Components/Payment/PaymentForm.jsx";
+import Aboutus from "./Components/Footer Components/Aboutus.jsx";
+import Contact from "./Components/Footer Components/Contact.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "login", element: <Login /> },
+      { path: "about", element: <Aboutus /> },
+      { path: "contact", element: <Contact /> },
       { path: "/cart", element: <Cart /> },
       { path: "/order", element: <Order /> },
       { path: `/payment/:id`, element: <PaymentForm/> },

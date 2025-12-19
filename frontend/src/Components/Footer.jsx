@@ -14,8 +14,8 @@ const Footer = () => {
         <div className="flex flex-col gap-5">
           <p className="text-sm text-stone-500">ABOUT</p>
           <ul className="flex flex-col text-white text-xs font-bold gap-1">
-            <li>About us</li>
-            <li>Contact us</li>
+            <li><NavLink to="/about" className="hover:underline">About us</NavLink></li>
+            <li><NavLink to="/contact" className="hover:underline">Contact us</NavLink></li>
             <li>Careers</li>
             <li>Stories</li>
           </ul>

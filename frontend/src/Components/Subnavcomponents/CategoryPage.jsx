@@ -27,15 +27,13 @@ const CategoryPage = () => {
   }, [name]);
 
   // Handle add to cart
-  const handleCart = (product) => {
+  const handleCart = async (product) => {
     try {
-      const cartItem = async (product) => {
-        const response = await addToCart(product._id, 1);
-        alert(`${response.data.message}`);
-        navigate(`/cart`);
-      };
-      cartItem(product);
+      const response = await addToCart(product._id, 1);
+      showAlert(response.data || response, "success", "error");
+      navigate(`/cart`);
     } catch (error) {
+      // surface server response message to the user
       showAlert(error.response || error, "success", "error");
     }
   };
@@ -50,18 +48,6 @@ const CategoryPage = () => {
 
   return (
     <div className="w-full h-full flex justify-center">
-      {/*Showing flash message*/}
-      {serverMsg && (
-        <div
-          className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
-            status === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          {serverMsg}
-        </div>
-      )}
-
       <div className="w-[96%] flex flex-row justify-center gap-4 mt-6">
         {/* Filter section */}
         <div className="w-1/5 bg-white/80">
@@ -69,11 +55,22 @@ const CategoryPage = () => {
         </div>
         {/* Products grid section */}
         <div className="w-4/5 min-h-[100vh] bg-white/80 p-4">
+          {/*Showing flash message*/}
+          {serverMsg && (
+            <div
+              className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+                status === "success" ? "bg-green-500" : "bg-red-500"
+              }`}
+              style={{ transform: "translate(-50%, -50%)" }}
+            >
+              {serverMsg}
+            </div>
+          )}
           <div className="grid grid-cols-3 gap-5 justify-items-center">
             {products.map((product, index) => (
               <div
                 key={index}
-                className="w-[330px] flex flex-col bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 overflow-hidden hover:scale-105 p-4"
+                className="w-[330px] flex flex-col bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 overflow-hidden p-4"
               >
                 <div className="w-full h-[200px] overflow-hidden">
                   <img
@@ -100,7 +97,9 @@ const CategoryPage = () => {
                           (product.price * product.discount) / 100}
                       </span>
                     </div>
-                    <span className="text-md font-medium text-gray-100 bg-red-500 rounded-full px-2 py-1">{product.discount}% Off</span>
+                    <span className="text-md font-medium text-gray-100 bg-red-500 rounded-full px-2 py-1">
+                      {product.discount}% Off
+                    </span>
                     <button
                       onClick={() => handleCart(product)}
                       className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"

@@ -37,7 +37,7 @@ export const setUserAddress = async (_data) => {
       });
       return response;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 }
 
@@ -114,7 +114,7 @@ export const addToCart = async (productId, quantity) => {
     );
     return response;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -129,7 +129,7 @@ export const getCartItems = async () => {
     );
     return response;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -163,7 +163,7 @@ export const placeOrder = async (_data) => {
     );
     return response;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 }
 
@@ -177,7 +177,7 @@ export const viewOrder = async () => {
     );
     return response;
   } catch (error) {
-    throw new Error(error);
+    throw error;
     
   }
 };
@@ -190,7 +190,7 @@ export const removeOrder = async (id) => {
     );
     return response;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 }
 

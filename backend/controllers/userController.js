@@ -1,7 +1,7 @@
 import userModel from "../models/user-model.js";
 import genToken from "../utils/genToken.js";
 import bcrypt from "bcrypt";
-import deliveryDate from '../utils/deliveryDate.js';
+import deliveryDate from "../utils/deliveryDate.js";
 import dateTime from "../utils/dateTime.js";
 
 // Function to register a new user
@@ -107,16 +107,20 @@ export const getUser = async (req, res) => {
 
 // Function to add a product to cart
 export const addToCart = async (req, res) => {
-  const { productId, quantity } = req.body;
-  const user = await userModel.findById(req.user._id);
-  const existing = user.cart.find((c) => c.product.toString() === productId);
-  if (existing) {
-    existing.quantity = existing.quantity + Number(quantity);
-  } else {
-    user.cart.push({ product: productId, quantity: Number(quantity) });
+  try {
+    const { productId, quantity } = req.body;
+    const user = await userModel.findById(req.user._id);
+    const existing = user.cart.find((c) => c.product.toString() === productId);
+    if (existing) {
+      existing.quantity = existing.quantity + Number(quantity);
+    } else {
+      user.cart.push({ product: productId, quantity: Number(quantity) });
+    }
+    await user.save();
+    return res.status(200).json({ message: "Product Added to Cart", user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  await user.save();
-  return res.status(200).json({ message: "Product Added to Cart", user });
 };
 
 // Function to get cart items
@@ -178,7 +182,7 @@ export const placeOrder = async (req, res) => {
             totalAmount,
             paymentMode,
             orderDate: `${date} ${time}`,
-            deliveryDate: deliveryDate(date,addDay),
+            deliveryDate: deliveryDate(date, addDay),
           },
         },
       },

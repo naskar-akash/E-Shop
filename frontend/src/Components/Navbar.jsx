@@ -108,7 +108,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <NavLink to="Cart">
+          <NavLink to="/cart">
             <li className="flex gap-2 py-3">
               <FaCartShopping className="size-6" />
               <p className="text-lg px-0.5">Cart</p>
