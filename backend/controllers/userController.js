@@ -72,7 +72,7 @@ export const loginUser = async (req, res) => {
         let token = genToken(user);
         res.cookie("token", token,{
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: true,
           sameSite: "none", // if frontend and backend are on different domains
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
