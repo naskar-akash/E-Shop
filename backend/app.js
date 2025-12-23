@@ -23,19 +23,7 @@ const __dirname = dirname(__filename);
 // Middlewares
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (Postman, server-to-server)
-      if (!origin) return callback(null, true);
-      // Allow localhost
-      if (origin.startsWith("http://localhost")) {
-        return callback(null, true);
-      }
-      // Allow all Vercel deployments
-      if (origin.endsWith(".vercel.app")) {
-        return callback(null, true);
-      }
-      return callback(new Error("Not allowed by CORS"));
-    },
+    origin: [process.env.FRONTEND_URL || "http://localhost:3000"],
     credentials: true,
   })
 );
