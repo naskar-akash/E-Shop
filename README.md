@@ -10,9 +10,9 @@ A simple e-commerce example project with a Node/Express backend and a React + Vi
 - [Installation & run](#installation--run)
 - [Scripts](#scripts)
 - [API (overview)](#api-overview)
-- [Frontend usage](#frontend-usage)
+- [Frontend usage notes](#frontend-usage-notes)
 - [Deployed version](#deployed-version)
-- [License](#license)
+- [Developed By](#developed-by)
 
 ## Project structure
 - `backend/` — Express API, MongoDB models, controllers, routes
@@ -119,7 +119,7 @@ Main endpoints (default base: `http://localhost:3000`):
 - Vite frontend expects `VITE_SERVER_URL` to point at the backend.
 
 ## Deployed version
-- Click to this link `https://e-shop-fmhh-3ls3a9lme-naskar-akashs-projects.vercel.app/` to see how this app works
+- Click to this link [https://e-shop-online-akash.app](https://e-shop-fmhh-3ls3a9lme-naskar-akashs-projects.vercel.app/) to see how this app works
 
 ## Developed By
 Akash Naskar
