@@ -23,7 +23,25 @@ const __dirname = dirname(__filename);
 // Middlewares
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL || "http://localhost:3000"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (Postman, server-to-server)
+      if (!origin) return callback(null, true);
+
+      // Allow localhost
+      if (origin.startsWith("http://localhost")) {
+        return callback(null, true);
+      }
+
+      // Allow ONLY your Vercel project deployments
+      if (
+        origin === process.env.FRONTEND_URL ||
+        origin.endsWith("-naskar-akashs-projects.vercel.app")
+      ) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
