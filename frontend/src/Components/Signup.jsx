@@ -42,7 +42,7 @@ const Signup = () => {
         </div>
       )}
 
-      <div className="w-[60%] h-[78vh] flex flex-col justify-center mt-6 bg-white/80 shadow-xl px-10 py-4">
+      <div className="w-[75%] md:w-[60%] md:h-[78vh] flex flex-col justify-center mt-6 bg-white/80 shadow-xl px-10 py-4">
         <h2 className="text-3xl text-blue-700 font-bold mb-8">
           Create Your Account
         </h2>

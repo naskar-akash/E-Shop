@@ -41,8 +41,8 @@ const Login = () => {
         </div>
       )}
 
-      <div className="w-[60%] h-[75vh] flex flex-row justify-center mt-6">
-        <div className="w-2/5 bg-blue-500 flex flex-col justify-between p-8">
+      <div className="w-[75%] md:w-[60%] md:h-[75vh] flex flex-col md:flex-row justify-center mt-6">
+        <div className="md:w-2/5 bg-blue-500 flex flex-col justify-between p-8">
           <div className="flex justify-center flex-col gap-2">
             <h2 className="text-white text-3xl font-semibold">
               Looks like you're new here!
@@ -55,8 +55,8 @@ const Login = () => {
             <img src={assets.logoLogin} alt="" className="w-[20vh] h-[20vh]" />
           </div>
         </div>
-        <div className="w-3/5 bg-white/80 flex flex-col justify-between">
-          <div className="flex flex-col px-8 py-10">
+        <div className="md:w-3/5 bg-white/80 flex flex-col justify-between">
+          <div className="flex flex-col px-8 md:py-10 py-4">
             <form
               onSubmit={handleSubmit(onSubmit)}
               method="post"

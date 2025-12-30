@@ -30,7 +30,7 @@ const Paint = () => {
       onClick={() => navigate("/paintings")}
       className="w-full flex h-full flex-row justify-center gap-2 p-2"
     >
-      <div className="w-[40%] h-full flex flex-col justify-center gap-2">
+      <div className="w-[30%] h-full flex flex-col justify-center gap-2">
         {randomPaint &&
           randomPaint.slice(0, 2).map((item) => (
             <div key={item._id} className="w-full h-1/2">
@@ -42,7 +42,7 @@ const Paint = () => {
             </div>
           ))}
       </div>
-      <div className="w-[48%] h-full">
+      <div className="w-[38%] h-full">
         {randomPaint[2] &&
             <div className="w-full h-full">
               <img

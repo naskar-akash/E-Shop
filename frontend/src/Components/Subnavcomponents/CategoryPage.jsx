@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getAllProducts } from "../Services/ProductServices";
 import AlertMsg from "../Services/AlertMsg";
 import { addToCart } from "../Services/UserServices";
+import CatergoryFilter from "./CatergoryFilter";
 
 const CategoryPage = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const CategoryPage = () => {
       <div className="w-[96%] flex flex-row justify-center gap-4 mt-6">
         {/* Filter section */}
         <div className="w-1/5 bg-white/80">
-          <div>{name} filters</div>
+          <div><CatergoryFilter name={name} products={products}/></div>
         </div>
         {/* Products grid section */}
         <div className="w-4/5 min-h-[100vh] bg-white/80 p-4">
