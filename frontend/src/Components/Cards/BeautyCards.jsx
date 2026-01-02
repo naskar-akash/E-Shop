@@ -28,18 +28,23 @@ const BeautyCards = () => {
   return (
     <div
       onClick={() => navigate("/beauty")}
-      className="w-full flex h-full gap-2 flex-row justify-evenly"
+      className="w-full h-auto flex flex-col justify-center gap-4 p-2"
     >
-      {randomBeauty &&
-        randomBeauty.map((item, index) => (
-          <div key={item._id || index} className="w-[32%] max-h-full py-2">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-full object-fill rounded-sm"
-            />
-          </div>
-        ))}
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-4 w-full">
+        {randomBeauty &&
+          randomBeauty.slice(0, 3).map((item) => (
+            <div
+              key={item._id}
+              className="w-full h-40 sm:h-52 md:h-44 overflow-hidden flex items-center justify-center"
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-fill rounded-sm"
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

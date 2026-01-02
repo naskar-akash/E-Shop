@@ -28,30 +28,36 @@ const Paint = () => {
   return (
     <div
       onClick={() => navigate("/paintings")}
-      className="w-full flex h-full flex-row justify-center gap-2 p-2"
+      className="w-full h-auto p-2"
     >
-      <div className="w-[30%] h-full flex flex-col justify-center gap-2">
-        {randomPaint &&
-          randomPaint.slice(0, 2).map((item) => (
-            <div key={item._id} className="w-full h-1/2">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-fill rounded-sm"
-              />
-            </div>
-          ))}
-      </div>
-      <div className="w-[38%] h-full">
-        {randomPaint[2] &&
-            <div className="w-full h-full">
-              <img
-                src={randomPaint[2].image}
-                alt={randomPaint[2].name}
-                className="w-full h-full object-fill rounded-sm"
-              />
-            </div>
-          }
+      <div className="grid grid-cols-2 gap-2 h-full">
+        {/* Left column: two stacked images */}
+        <div className="flex flex-col gap-2 h-1/2">
+            {randomPaint &&
+              randomPaint.slice(0, 2).map((item) => (
+                <div
+                  key={item._id}
+                  className=""
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-fill rounded-sm"
+                  />
+                </div>
+              ))}
+        </div>
+
+        {/* Right column: single full-height image */}
+        <div className="">
+          {randomPaint[2] && (
+            <img
+              src={randomPaint[2].image}
+              alt={randomPaint[2].name}
+              className="w-full h-full object-fill rounded-sm"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

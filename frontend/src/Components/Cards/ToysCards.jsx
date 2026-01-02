@@ -11,9 +11,7 @@ const ToysCards = () => {
   useEffect(() => {
     const images = async () => {
       const response = await getAllProducts();
-      const img = response.data.filter(
-        (item) => item.category === "kids"
-      );
+      const img = response.data.filter((item) => item.category === "kids");
       setKids(img);
     };
     images();
@@ -29,19 +27,24 @@ const ToysCards = () => {
 
   return (
     <div
-      onClick={() => navigate("/toys")}
-      className="w-full flex h-full gap-2 flex-row justify-evenly"
+      onClick={() => navigate("/kids")}
+      className="w-full h-auto flex flex-col justify-center gap-4 p-2"
     >
-      {randomKids &&
-        randomKids.map((item, index) => (
-          <div key={item._id || index} className="w-[23%] max-h-full py-2">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-full object-fill rounded-sm"
-            />
-          </div>
-        ))}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+        {randomKids &&
+          randomKids.slice(0, 4).map((item) => (
+            <div
+              key={item._id}
+              className="w-full h-40 sm:h-52 md:h-44 overflow-hidden flex items-center justify-center"
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-fill rounded-sm"
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
