@@ -30,7 +30,7 @@ const BeautyCards = () => {
       onClick={() => navigate("/beauty")}
       className="w-full h-auto flex flex-col justify-center gap-4 p-2"
     >
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-4 w-full">
+      <div className="grid grid-cols-3 gap-4 w-full">
         {randomBeauty &&
           randomBeauty.slice(0, 3).map((item) => (
             <div

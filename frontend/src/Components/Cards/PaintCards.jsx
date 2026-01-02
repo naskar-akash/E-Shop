@@ -26,35 +26,28 @@ const Paint = () => {
   }, [paint]);
 
   return (
-    <div
-      onClick={() => navigate("/paintings")}
-      className="w-full h-auto p-2"
-    >
-      <div className="grid grid-cols-2 gap-2 h-full">
+    <div onClick={() => navigate("/paintings")} className="w-full p-2">
+      <div className="grid grid-cols-2 gap-2">
         {/* Left column: two stacked images */}
-        <div className="flex flex-col gap-2 h-1/2">
-            {randomPaint &&
-              randomPaint.slice(0, 2).map((item) => (
-                <div
-                  key={item._id}
-                  className=""
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-fill rounded-sm"
-                  />
-                </div>
-              ))}
+        <div className="grid grid-rows-2 gap-2">
+          {randomPaint.slice(0, 2).map((item) => (
+            <div key={item._id} className="w-auto h-40 md:h-52 overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-fill rounded-sm"
+              />
+            </div>
+          ))}
         </div>
 
-        {/* Right column: single full-height image */}
-        <div className="">
+        {/* Right column */}
+        <div className="flex items-center justify-center">
           {randomPaint[2] && (
             <img
               src={randomPaint[2].image}
               alt={randomPaint[2].name}
-              className="w-full h-full object-fill rounded-sm"
+              className="w-full h-full md:h-60 object-fill rounded-sm"
             />
           )}
         </div>
