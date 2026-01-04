@@ -51,32 +51,14 @@ const AdminHome = () => {
               key={index || product._id}
               className="w-full bg-white rounded-lg shadow-md px-4 py-2 flex flex-row gap-4 items-start"
             >
-              <div className="w-full md:w-40 h-40 flex-shrink-0 bg-gray-100 rounded overflow-hidden">
+              <div className="h-[140px] flex flex-col justify-between items-center">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-20 h-20 md:w-40 md:h-40 object-fill rounded-md"
                 />
-              </div>
-
-              <div className="w-full flex flex-col justify-between p-2">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {product.name}
-                  </h3>
-                  <p className="text-md text-gray-600 mt-2">
-                    {product.description}
-                  </p>
-                </div>
-
-                <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <div className="flex items-center gap-6">
-                    {!product.discount ? (<><span className="text-xl font-bold text-blue-600">
-                        ₹{product.price}
-                      </span>
-                      <span className="text-md p-2 bg-red-600 rounded-full font-semibold text-white">0% Off</span></>
-                    ) : (<>
-                    <div className="flex flex-col justify-evenly">
+                {/* pricing for mobile */}
+                <div className="flex md:hidden flex-col justify-evenly items-center">
                       <span className="text-sm font-light text-gray-800 line-through">
                         ₹{product.price}
                       </span>
@@ -86,18 +68,47 @@ const AdminHome = () => {
                           (product.price * product.discount) / 100}
                       </span>
                     </div>
-                    <span className="text-md p-2 bg-red-600 rounded-full font-semibold text-white">{product.discount}% Off</span></>
+              </div>
+
+              <div className="w-full flex flex-col justify-between p-2">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {product.name}
+                  </h3>
+                  <p className="text-[12px] md:text-sm text-gray-600 mt-2">
+                    {product.description}
+                  </p>
+                </div>
+
+                <div className="mt-4 flex flex-col md:flex-row md:items-center sm:justify-between gap-3">
+                  <div className="w-full flex justify-items-start items-center gap-4">
+                    {!product.discount ? (<><span className="text-xl font-bold text-blue-600">
+                        ₹{product.price}
+                      </span>
+                      <span className="text-md p-2 bg-red-600 rounded-full font-semibold text-white">0% Off</span></>
+                    ) : (<>
+                    <div className="hidden md:flex flex-col justify-evenly">
+                      <span className="text-sm font-light text-gray-800 line-through">
+                        ₹{product.price}
+                      </span>
+                      <span className="text-xl font-bold text-blue-600">
+                        ₹
+                        {product.price -
+                          (product.price * product.discount) / 100}
+                      </span>
+                    </div>
+                    <span className="text-xs md:text-sm px-3 py-2 bg-red-600 rounded-full font-semibold text-white">{product.discount}% Off</span></>
                   )}
-                    <span className="px-2 py-1 bg-gray-200 text-gray-800 rounded text-sm">
+                    <span className="flex px-2 py-1 bg-gray-200 text-gray-800 rounded text-[10px] md:text-sm">
                       {product.category}
                     </span>
                   </div>
 
-                  <div className="flex gap-2">
-                    <button className="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+                  <div className="w-full flex justify-end gap-2">
+                    <button className="w-1/2 md:w-1/3 px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                       Update
                     </button>
-                    <button onClick={()=>handleDelete(product)} className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete
+                    <button onClick={()=>handleDelete(product)} className="w-1/2 md:w-1/3 px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete
                     </button>
                   </div>
                 </div>
