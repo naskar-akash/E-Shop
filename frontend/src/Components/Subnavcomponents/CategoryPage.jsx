@@ -51,11 +51,11 @@ const CategoryPage = () => {
     <div className="w-full h-full flex justify-center">
       <div className="w-[96%] flex flex-row justify-center gap-4 mt-6">
         {/* Filter section */}
-        <div className="w-1/5 bg-white/80">
+        <div className="hidden lg:flex w-1/5 bg-white/80">
           <div><CatergoryFilter name={name} products={products}/></div>
         </div>
         {/* Products grid section */}
-        <div className="w-4/5 min-h-[100vh] bg-white/80 p-4">
+        <div className="w-full lg:w-4/5 min-h-[100vh] bg-white/80 p-4">
           {/*Showing flash message*/}
           {serverMsg && (
             <div
@@ -67,20 +67,72 @@ const CategoryPage = () => {
               {serverMsg}
             </div>
           )}
-          <div className="grid grid-cols-3 gap-5 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-center">
             {products.map((product, index) => (
               <div
                 key={index}
-                className="w-[330px] flex flex-col bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 overflow-hidden p-4"
+                className="w-full sm:max-w-[350px] xl:w-[320px] flex flex-row sm:flex-col bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 overflow-hidden p-4 min-[450px]:p-8 sm:p-4"
               >
-                <div className="w-full h-[200px] overflow-hidden">
+                {/* Product image */}
+                <div className="w-[50%] h-full sm:w-full sm:h-[200px] flex flex-col justify-between overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-500"
+                    className="w-full h-[70%] object-fill transition-transform duration-500  rounded-md"
                   />
+                  {/* pricing for mobile view */}
+                  <div className="flex sm:hidden flex-row justify-between items-center">
+                    <span className="text-md font-light text-gray-500 line-through">
+                      ₹{product.price}
+                    </span>
+                    <span className="hidden min-[390px]:flex text-lg font-medium text-gray-100 bg-red-500 rounded-full px-2 py-1">
+                      {product.discount}% Off
+                    </span>
+                    <span className="text-xl font-bold text-blue-600">
+                      ₹
+                      {product.price -
+                        (product.price * product.discount) / 100}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex flex-col justify-items-start py-4">
+
+
+                {/* mobile view */}
+                <div className="sm:hidden flex flex-col justify-between ml-4">
+                  <div className="flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-3">
+                    {product.description}
+                  </p>
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
+                    <span className="w-12 p-2 bg-green-100 text-green-800 text-xs rounded-full mb-3">
+                      4.5 ★
+                    </span>
+                    <span className="flex min-[390px]:hidden text-sm font-medium text-gray-100 bg-red-500 rounded-full p-2 mb-3">
+                      {product.discount}% Off
+                    </span>
+                    </div>
+                    <span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full mb-3">
+                      {product.price >= 500
+                        ? "Free Delivery"
+                        : product.price >= 300 && product.price < 500
+                        ? `₹${product.price * 0.05} delivery charge`
+                        : "₹15 delivery charge"}
+                    </span>
+                  <button
+                    onClick={() => handleCart(product)}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+
+
+                {/* Product details */}
+                <div className="hidden sm:flex sm:flex-col justify-items-start py-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">
                     {product.name}
                   </h3>
@@ -109,7 +161,8 @@ const CategoryPage = () => {
                     </button>
                   </div>
                 </div>
-                <div className="pb-4 flex flex-row justify-items-start gap-2">
+                {/* Product review */}
+                <div className="pb-4 hidden sm:flex sm:flex-row justify-items-start gap-2">
                   <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
                     4.5 ★
                   </span>

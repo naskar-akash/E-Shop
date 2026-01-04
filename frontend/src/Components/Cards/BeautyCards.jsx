@@ -26,17 +26,23 @@ const BeautyCards = () => {
   }, [beauty]);
 
   return (
-    <div
-      onClick={() => navigate("/beauty")}
-      className="w-full h-auto flex flex-col justify-center gap-4 p-2"
-    >
-      <div className="grid grid-cols-3 gap-4 w-full">
-        {randomBeauty &&
-          randomBeauty.slice(0, 3).map((item) => (
-            <div
-              key={item._id}
-              className="w-full h-40 sm:h-52 md:h-44 overflow-hidden flex items-center justify-center"
-            >
+    <div onClick={() => navigate("/beauty")} className="w-full p-2">
+      <div className="grid grid-cols-2 gap-2">
+
+        {/* Left column */}
+        <div className="flex items-center justify-center">
+          {randomBeauty[0] && (
+            <img
+              src={randomBeauty[0].image}
+              alt={randomBeauty[0].name}
+              className="w-full h-full md:h-60 object-fill rounded-sm"
+            />
+          )}
+        </div>
+          {/* Right column : two stacked images */}
+        <div className="grid grid-rows-2 gap-2">
+          {randomBeauty.slice(1, 3).map((item) => (
+            <div key={item._id} className="w-auto h-40 md:h-52 overflow-hidden">
               <img
                 src={item.image}
                 alt={item.name}
@@ -44,6 +50,7 @@ const BeautyCards = () => {
               />
             </div>
           ))}
+        </div>
       </div>
     </div>
   );
