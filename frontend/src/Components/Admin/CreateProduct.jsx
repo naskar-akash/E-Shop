@@ -63,7 +63,7 @@ const CreateProduct = () => {
           className="grid grid-cols-1 sm:grid-cols-3 gap-6"
         >
           {/*Image+Preview*/}
-          <div className="col-span-2 flex flex-col items-start gap-4">
+          <div className="col-span-1 flex flex-col items-start gap-4">
             <label className="w-full">
               <span className="block text-sm font-medium text-gray-700 mb-2">
                 Product Image
