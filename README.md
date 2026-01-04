@@ -119,7 +119,7 @@ Main endpoints (default base: `http://localhost:3000`):
 - Vite frontend expects `VITE_SERVER_URL` to point at the backend.
 
 ## Deployed version
-- Click to this link [https://e-shop-online-akash.app](https://e-shop-fmhh-3ls3a9lme-naskar-akashs-projects.vercel.app/) to see how this app works
+- Click to this link [https://e-shop-online-akash.app](https://e-shop-fmhh.vercel.app/) to see how this app works
 
 ## Developed By
 Akash Naskar
