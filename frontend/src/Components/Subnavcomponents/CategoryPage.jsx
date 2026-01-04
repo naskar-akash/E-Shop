@@ -81,12 +81,9 @@ const CategoryPage = () => {
                     className="w-full h-[70%] object-fill transition-transform duration-500  rounded-md"
                   />
                   {/* pricing for mobile view */}
-                  <div className="flex sm:hidden flex-row justify-between items-center">
+                  <div className="flex sm:hidden flex-col justify-between items-center">
                     <span className="text-md font-light text-gray-500 line-through">
                       ₹{product.price}
-                    </span>
-                    <span className="hidden min-[390px]:flex text-lg font-medium text-gray-100 bg-red-500 rounded-full px-2 py-1">
-                      {product.discount}% Off
                     </span>
                     <span className="text-xl font-bold text-blue-600">
                       ₹
@@ -111,7 +108,7 @@ const CategoryPage = () => {
                     <span className="w-12 p-2 bg-green-100 text-green-800 text-xs rounded-full mb-3">
                       4.5 ★
                     </span>
-                    <span className="flex min-[390px]:hidden text-sm font-medium text-gray-100 bg-red-500 rounded-full p-2 mb-3">
+                    <span className="text-sm font-medium text-gray-100 bg-red-500 rounded-full p-2 mb-3">
                       {product.discount}% Off
                     </span>
                     </div>
