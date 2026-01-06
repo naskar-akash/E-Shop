@@ -271,7 +271,7 @@ const PaymentForm = () => {
               type="submit"
               className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition"
             >
-              ₹{totalPrice + deliveryCharge + 25}
+             Pay {' '} ₹{totalPrice + deliveryCharge + 25}
             </button>
           </form>
         </div>

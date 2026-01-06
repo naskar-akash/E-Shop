@@ -109,14 +109,14 @@ const Cart = () => {
         )}
         <h2 className="w-full text-3xl font-bold text-center mb-4">My Cart</h2>
         {/* Address */}
-        <div className="w-full flex justify-between items-center mt-2 bg-white shadow-md rounded-2xl p-4 border border-gray-200">
-          <div className="flex flex-row gap-1">
-            <p className="text-lg text-gray-600 font-semibold">
+        <div className="w-full flex flex-col gap-4 md:flex-row justify-between items-center mt-2 bg-white shadow-md rounded-2xl p-4 border border-gray-200">
+          <div className="flex flex-col gap-1">
+            <span className="text-md md:text-lg text-gray-600 font-semibold">
               Delivered to: {userProfile.username}, Pin - {userProfile.pincode}
-            </p>
-            <p className="text-md font-medium text-stone-500">
-              , {userProfile.address}
-            </p>
+            </span>
+            <span className="text-sm md:text-lg font-medium text-stone-500">
+              Address: {userProfile.address}
+            </span>
           </div>
           <button
             onClick={() => setOpen(!open)}
@@ -199,31 +199,31 @@ const Cart = () => {
               return (
                 <div
                   key={idx}
-                  className="w-full h-[250px] bg-white shadow-xl rounded-2xl p-4 border border-gray-200 flex flex-row gap-4 hover:shadow-2xl transition-all"
+                  className="w-full h-auto md:h-[250px] bg-white shadow-xl rounded-2xl p-4 border border-gray-200 flex flex-col sm:flex-row gap-4 hover:shadow-2xl transition-all items-stretch"
                 >
                   {/* Product Image */}
-                  <div className="w-[20%] flex items-center justify-center bg-gray-100 rounded-xl overflow-hidden">
+                  <div className="w-full md:w-1/5 flex items-center justify-center bg-gray-100 rounded-xl overflow-hidden">
                     <img
-                      className="object-contain w-full h-full p-2"
+                      className="object-contain rounded w-2/5 sm:w-full p-2"
                       src={i.image}
                       alt={i.product.name}
                     />
                   </div>
 
-                  <div className="w-[78%] flex flex-col justify-between gap-1 px-4 py-2">
+                  <div className="w-full md:w-4/5 flex flex-col justify-between gap-1 px-4 py-2">
                     {/* Name and price */}
                     <div className="mb-2">
-                      <h3 className="text-lg font-semibold truncate">
+                      <h3 className="text-md md:text-lg font-semibold truncate">
                         {i.product.name}
                       </h3>
-                      <div className="flex justify-items-start items-center gap-5 mt-2">
-                        <span className="text-sm text-gray-700 mt-1 line-through">
+                      <div className="flex justify-start gap-4 items-center mt-2">
+                        <span className="text-xs sm:text-sm text-gray-700 mt-1 line-through">
                           ₹ {i.product.price}
                         </span>
-                        <span className="text-md font-medium text-gray-100 bg-cyan-600 rounded-full px-2 py-1">
+                        <span className="text-[13px] sm:text-[16px] font-medium text-gray-100 bg-cyan-600 rounded-full px-2 py-1">
                           {i.product.discount}% Off
                         </span>
-                        <span className="text-xl text-gray-700 text-shadow-md font-bold">
+                        <span className="text-md sm:text-xl text-gray-700 text-shadow-md font-bold">
                           ₹ {finalprice}
                         </span>
                       </div>
@@ -231,7 +231,7 @@ const Cart = () => {
 
                     <div className="flex items-center justify-between mb-2">
                       {/* Quantity */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col sm:flex-row items-center gap-2">
                         <span className="text-md font-semibold text-gray-700">
                           Quantity
                         </span>
@@ -257,25 +257,25 @@ const Cart = () => {
                       </div>
                       {/* Total price */}
                       <div className="flex flex-col justify-end text-right">
-                        <span className="text-md font-medium text-gray-500">
+                        <span className="text-sm sm:text-md font-medium text-gray-500">
                           Total
                         </span>
-                        <span className="text-xl font-bold text-gray-600 text-shadow-md">
+                        <span className="text-md sm:text-xl font-bold text-gray-600 text-shadow-md">
                           ₹ {finalprice * i.quantity}
                         </span>
                       </div>
                     </div>
                     {/* button */}
-                    <div className="w-full flex justify-content-center items-center gap-2">
+                    <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-2">
                       <button
                         onClick={() => handleRemoveCartItems(i._id)}
-                        className="w-1/2 py-2 bg-red-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-red-600 transition"
+                        className="w-full sm:w-1/2 py-2 bg-red-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-red-600 transition"
                       >
                         Remove
                       </button>
                       <button
                         onClick={() => buyNow(i)}
-                        className="w-1/2 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition"
+                        className="w-full sm:w-1/2 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition"
                       >
                         Buy Now
                       </button>
