@@ -27,6 +27,12 @@ const Navbar = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    // navigate(`/search?query=${encodeURIComponent(query)}`);
+    console.log("Search query:", query);
+  };
+
   return (
     <div className="sticky top-0 shadow-md bg-white/90 mx-auto z-50 w-full">
       {/*Showing flash message*/}
@@ -57,6 +63,7 @@ const Navbar = () => {
           </button>
           <input
             type="text"
+            onChange={(e)=>{handleSearch(e)}}
             className="bg-blue-100 pr-3 py-2 rounded-r-xl w-full outline-none"
             placeholder="Search for Brands, Products and More"
           />
