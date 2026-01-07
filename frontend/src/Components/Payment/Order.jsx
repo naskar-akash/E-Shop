@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { viewOrder,removeOrder } from "../Services/UserServices";
+import { viewOrder, removeOrder } from "../Services/UserServices";
 import AlertMsg from "../Services/AlertMsg";
 import { assets } from "../../assets/assets";
 
@@ -58,21 +58,21 @@ const Order = () => {
     } catch (error) {
       showAlert(error.response || error, "success", "error");
     }
-  }
+  };
 
   return (
     <div className="flex flex-col px-4 py-6 max-w-7xl mx-auto">
       {/*Showing flash message*/}
-        {serverMsg && (
-          <div
-            className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
-              status === "success" ? "bg-green-500" : "bg-red-500"
-            }`}
-            style={{ transform: "translate(-50%, -50%)" }}
-          >
-            {serverMsg}
-          </div>
-        )}
+      {serverMsg && (
+        <div
+          className={`fixed top-1/2 left-1/2 p-6 rounded-lg shadow-lg shadow-zinc-500 text-white transition-transform duration-300 ${
+            status === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+          style={{ transform: "translate(-50%, -50%)" }}
+        >
+          {serverMsg}
+        </div>
+      )}
       <h1 className="w-full text-3xl font-bold text-center mb-6">
         Your Orders
       </h1>
@@ -84,19 +84,19 @@ const Order = () => {
             return (
               <div
                 key={idx}
-                className="w-full bg-white rounded-2xl p-4 border border-gray-200 hover:shadow-lg transition-all flex flex-row gap-4"
+                className="w-full bg-white rounded-2xl p-4 border border-gray-200 hover:shadow-lg transition-all flex flex-col sm:flex-row gap-4"
               >
                 {/* Product Image */}
-                <div className="flex flex-col justify-evenly">
-                  <div className="w-[120px] h-[120px] bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-200">
+                <div className="flex flex-col justify-between sm:items-start gap-4">
+                  <div className="w-full sm:w-[120px] sm:h-[120px] bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-200">
                     <img
                       src={i.product.image}
                       alt={i.product.name}
-                      className="object-contain w-full h-full p-3"
+                      className="object-contain w-2/5 sm:w-full h-full p-3"
                     />
                   </div>
                   <button
-                    onClick={()=>handleRemoveOrder(i._id)}
+                    onClick={() => handleRemoveOrder(i._id)}
                     className="px-3 py-2 bg-rose-600 text-sm text-white font-medium rounded-lg hover:bg-rose-500 transition"
                   >
                     Remove Order
@@ -132,32 +132,36 @@ const Order = () => {
                       Order Summary
                     </h3>
 
-                    <div className="grid grid-cols-3 text-sm">
-                      <div className="flex flex-row gap-3">
-                        <span className="text-gray-500">Qty:</span>
-                        <p className="font-semibold text-gray-800">
-                          {i.quantity}
-                        </p>
+                    <div className="flex flex-col sm:flex-row sm:justify-between text-sm gap-2">
+                      <div className="w-full sm:w-1/2 flex justify-between items-center">
+                        <div className="flex flex-row gap-1">
+                          <span className="text-gray-500">Qty:</span>
+                          <p className="font-semibold text-gray-800">
+                            {i.quantity}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-row justify-end gap-1">
+                          <span className="text-gray-500">Total Pay:</span>
+                          <p className="font-semibold text-gray-800">
+                            ₹{i.totalAmount}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="flex flex-row gap-3">
-                        <span className="text-gray-500">Total Pay:</span>
-                        <p className="font-semibold text-gray-800">
-                          ₹{i.totalAmount}
-                        </p>
-                      </div>
-
-                      <div className="flex flex-row gap-3">
-                        <span className="text-gray-500">Payment:</span>
-                        <div className="font-semibold text-gray-800">
-                          {payMode(i.paymentMode)}
+                      <div className="flex justify-center items-center">
+                        <div className="flex flex-row gap-1">
+                          <span className="text-gray-500">Payment:</span>
+                          <div className="font-semibold text-gray-800">
+                            {payMode(i.paymentMode)}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Dates */}
-                  <div className="flex justify-between items-center mt-3 text-sm px-4">
+                  <div className="flex flex-col gap-3 sm:flex-row justify-between items-center mt-3 text-sm px-4">
                     <div>
                       <span className="text-gray-500">Placed On:</span>{" "}
                       <span className="font-semibold text-gray-700">
