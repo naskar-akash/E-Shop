@@ -38,6 +38,26 @@ export const getProductById = async (req, res) => {
   }
 }
 
+// Get product by searching its name
+export const getSearchedProduct = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const products = await productModel.find({ name: { $regex: name, $options: "i" } });
+    if (!products)
+      return res.status(404).json({ message: "No products found" });
+    // Convert buffer to Base64
+    const formattedProducts = products.map((product) => ({
+      ...product._doc,
+      image: product.image
+        ? `data:${product.image.contentType};base64,${product.image.data.toString("base64")}`
+        : null,
+    }));
+    res.status(200).json(formattedProducts);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 // Fuction to create products
 export const createProducts = async (req, res) => {
   try {
