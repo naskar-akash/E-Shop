@@ -27,16 +27,6 @@ const Navbar = () => {
     }
   };
 
-  const handleSearchInput = (e) => {
-    const query = e.target.value;
-    // navigate(`/search?query=${encodeURIComponent(query)}`);
-    console.log("Search query:", query);
-  };
-  const handleSearch = () => {
-    // Implement search functionality here
-    console.log("Search button clicked");
-  }
-
   return (
     <div className="sticky top-0 shadow-md bg-white/90 mx-auto z-50 w-full">
       {/*Showing flash message*/}
@@ -62,12 +52,11 @@ const Navbar = () => {
         </NavLink>
         {/*Search section*/}
         <div className="hidden md:flex w-[60%] lg:w-[45%] items-center">
-          <button onClick={handleSearch} className="bg-blue-100 p-2 rounded-l-xl">
+          <button className="bg-blue-100 p-2 rounded-l-xl">
             <CiSearch className="size-6" />
           </button>
           <input
             type="text"
-            onChange={(e)=>{handleSearchInput(e)}}
             className="bg-blue-100 pr-3 py-2 rounded-r-xl w-full outline-none"
             placeholder="Search for Brands, Products and More"
           />
