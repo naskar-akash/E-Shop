@@ -41,7 +41,8 @@ export const getProductById = async (req, res) => {
 // Get product by searching its name
 export const getSearchedProduct = async (req, res) => {
   try {
-    const { name } = req.params;
+    const name = req.query.q;
+    if( !name ){ return res.status(400).json({ message: "Search term is required" }); }
     const products = await productModel.find({ name: { $regex: name, $options: "i" } });
     if (!products)
       return res.status(404).json({ message: "No products found" });

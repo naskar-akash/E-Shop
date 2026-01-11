@@ -115,7 +115,7 @@ const PaymentForm = () => {
             <div className="border-t pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>₹{totalPrice}</span>
+                <span>₹{Math.round(totalPrice)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Delivery Charge</span>
@@ -127,7 +127,7 @@ const PaymentForm = () => {
               </div>
               <div className="flex justify-between font-semibold text-base">
                 <span>Total</span>
-                <span>₹{totalPrice + deliveryCharge + 25}</span>
+                <span>₹{Math.round(totalPrice + deliveryCharge + 25)}</span>
               </div>
             </div>
           </div>
@@ -271,7 +271,7 @@ const PaymentForm = () => {
               type="submit"
               className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition"
             >
-             Pay {' '} ₹{totalPrice + deliveryCharge + 25}
+             Pay {' '} ₹{Math.round(totalPrice + deliveryCharge + 25)}
             </button>
           </form>
         </div>

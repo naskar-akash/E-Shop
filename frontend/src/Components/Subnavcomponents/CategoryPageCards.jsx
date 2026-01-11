@@ -109,8 +109,7 @@ const CategoryPageCards = ({ newProducts }) => {
                       </span>
                       <span className="text-xl font-bold text-blue-600">
                         ₹
-                        {product.price -
-                          (product.price * product.discount) / 100}
+                        {Math.round(product.price - (product.price * product.discount) / 100)}
                       </span>
                     </div>
                     <span className="text-md font-medium text-gray-100 bg-red-500 rounded-full px-2 py-1">

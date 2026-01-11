@@ -30,6 +30,19 @@ export const createProducts = async (_data) => {
   }
 };
 
+// Function to get products by search
+export const getSearchedProducts = async(query) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/product/search?q=${query}`,{
+      withCredentials: true,
+    });
+    return response;
+  } catch(error) {
+    throw new Error(error?.response?.data?.message || error.message || "Request failed!"
+    );
+  }
+};
+
 // Function to show all products other than admin
 export const getAllProducts = async () => {
   try {

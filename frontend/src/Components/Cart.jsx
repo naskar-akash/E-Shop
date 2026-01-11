@@ -224,7 +224,7 @@ const Cart = () => {
                           {i.product.discount}% Off
                         </span>
                         <span className="text-md sm:text-xl text-gray-700 text-shadow-md font-bold">
-                          ₹ {finalprice}
+                          ₹ {Math.round(finalprice)}
                         </span>
                       </div>
                     </div>

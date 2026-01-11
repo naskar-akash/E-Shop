@@ -121,7 +121,7 @@ const Order = () => {
                       </span>
 
                       <span className="text-xl font-bold text-gray-800">
-                        ₹{finalprice}
+                        ₹ {Math.round(finalprice)}
                       </span>
                     </div>
                   </div>
@@ -144,7 +144,7 @@ const Order = () => {
                         <div className="flex flex-row justify-end gap-1">
                           <span className="text-gray-500">Total Pay:</span>
                           <p className="font-semibold text-gray-800">
-                            ₹{i.totalAmount}
+                            ₹ {Math.round(i.totalAmount)}
                           </p>
                         </div>
                       </div>
