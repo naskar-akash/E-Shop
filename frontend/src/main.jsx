@@ -14,7 +14,8 @@ import Order from "./Components/Payment/Order.jsx";
 import PaymentForm from "./Components/Payment/PaymentForm.jsx";
 import Aboutus from "./Components/Footer Components/Aboutus.jsx";
 import Contact from "./Components/Footer Components/Contact.jsx";
-import SearchedProd from "./Components/Subnavcomponents/SearchedProd.jsx"
+import SearchedProd from "./Components/Subnavcomponents/SearchedProd.jsx";
+import Profile from "./Components/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,8 @@ const router = createBrowserRouter([
       { path: "admin/create", element: <CreateProducts /> },
       { path: "login/signup", element: <Signup /> },
       { path: "/:name", element: <CategoryPage /> },
-      { path: "/search", element: <SearchedProd/>}
+      { path: "/search", element: <SearchedProd/>},
+      { path: "/profile", element: <Profile /> },
     ],
   },
 ]);

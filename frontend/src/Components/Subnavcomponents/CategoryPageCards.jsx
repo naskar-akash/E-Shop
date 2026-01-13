@@ -11,7 +11,7 @@ const CategoryPageCards = ({ newProducts }) => {
   const handleCart = async (product) => {
     try {
       const response = await addToCart(product._id, 1);
-      showAlert(response.data || response, "success", "error");
+      showAlert(response.data.message || response.data, "success", "error");
       navigate(`/cart`);
     } catch (error) {
       // surface server response message to the user

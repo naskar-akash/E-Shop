@@ -70,7 +70,7 @@ export const loginUser = async (req, res) => {
       if (err) return res.json({ message: err.message });
       if (result) {
         let token = genToken(user);
-        res.cookie("token", token,{
+        res.cookie("token", token, {
           httpOnly: true,
           secure: true,
           sameSite: "none", // if frontend and backend are on different domains
@@ -100,11 +100,17 @@ export const logoutUser = (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const user = await userModel.findOne({ email: req.user.email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found!" });
-    } else {
-      res.status(200).json(user);
-    }
+    if (!user) return res.status(404).json({ message: "User not found!" });
+    // Convert buffer to Base64
+    const formattedUser = {
+      ...user._doc,
+      image: user.image
+        ? `data:${user.image.contentType};base64,${user.image.data.toString(
+            "base64"
+          )}`
+        : null,
+    };
+    res.status(200).json(formattedUser);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

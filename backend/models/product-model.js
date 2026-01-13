@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import dateTime from '../utils/dateTime.js';
+import base64Image  from '../utils/convertToBase64.js'
 const { date } = dateTime();
 
 const productSchema = new Schema({
@@ -8,9 +9,15 @@ const productSchema = new Schema({
         required: true
     },
     image: {
-        data: Buffer,
-        contentType: String,
+    data: {
+      type: Buffer,
+      default: Buffer.from(base64Image.product, "base64"),
     },
+    contentType: {
+      type: String,
+      default: "image/jpeg",
+    },
+  },
     description: {
         type: String,
         required: true

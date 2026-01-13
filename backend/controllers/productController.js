@@ -15,6 +15,7 @@ export const getAllProductsAdmin = async (req, res) => {
     }));
     res.status(200).json(formattedProducts);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: error.message });
   }
 };
@@ -64,22 +65,28 @@ export const createProducts = async (req, res) => {
   try {
     const { name, description, category, price, discount } = req.body;
 
-    const products = await productModel.create({
+    const productData = {
       name,
-      image: {
-        data: req.file.buffer,
-        contentType: req.file.mimetype,
-      },
       description,
       category,
       price,
       discount,
       admin: req.user._id,
-    });
+    }
+
+    if(req.file){
+      productData.image = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      }
+    }
+
+    const products = await productModel.create(productData);
     res
       .status(201)
       .json({ message: "Product created successfully!", products });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };

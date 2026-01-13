@@ -64,8 +64,8 @@ const AdminHome = () => {
                       </span>
                       <span className="text-xl font-bold text-blue-600">
                         ₹
-                        {product.price -
-                          (product.price * product.discount) / 100}
+                        {Math.round(product.price -
+                          (product.price * product.discount) / 100)}
                       </span>
                     </div>
               </div>
@@ -93,8 +93,8 @@ const AdminHome = () => {
                       </span>
                       <span className="text-xl font-bold text-blue-600">
                         ₹
-                        {product.price -
-                          (product.price * product.discount) / 100}
+                        {Math.round(product.price -
+                          (product.price * product.discount) / 100)}
                       </span>
                     </div>
                     <span className="text-xs md:text-sm px-3 py-2 bg-red-600 rounded-full font-semibold text-white">{product.discount}% Off</span></>
