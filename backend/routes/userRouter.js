@@ -12,8 +12,10 @@ import {
   userAddress,
   placeOrder,
   viewOrder,
-  removeOrder
+  removeOrder,
+  updateProfilePic,
 } from "../controllers/userController.js";
+import upload from "../config/multer-config.js";
 
 // Route to create a new user
 router.post("/register", registerUser);
@@ -47,5 +49,8 @@ router.get("/order", isLogged, viewOrder)
 
 // Route to remove placed orders
 router.delete("/order/:id", isLogged, removeOrder)
+
+// Route to update user profile picture
+router.put("/profile/pic", isLogged, upload.single("profilePic"), updateProfilePic);
 
 export default router;

@@ -4,7 +4,7 @@ import productModel from "../models/product-model.js";
 export const getAllProductsAdmin = async (req, res) => {
   try {
     const products = await productModel.find();
-    if (!products)
+    if (!products || products.length === 0)
       return res.status(404).json({ message: "No products found" });
     // Convert buffer to Base64
     const formattedProducts = products.map((product) => ({

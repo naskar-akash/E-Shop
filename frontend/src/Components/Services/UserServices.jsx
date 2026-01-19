@@ -194,3 +194,21 @@ export const removeOrder = async (id) => {
   }
 }
 
+// Function to update user profile picture
+export const updateProfilePic = async (formData) => {
+  try {
+    const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/user/profile/pic`,
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+

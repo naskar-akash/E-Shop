@@ -104,8 +104,8 @@ export const getUser = async (req, res) => {
     // Convert buffer to Base64
     const formattedUser = {
       ...user._doc,
-      image: user.image
-        ? `data:${user.image.contentType};base64,${user.image.data.toString(
+      profilePic: user.profilePic
+        ? `data:${user.profilePic.contentType};base64,${user.profilePic.data.toString(
             "base64"
           )}`
         : null,
@@ -250,3 +250,27 @@ export const removeOrder = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Function to update user profile picture
+export const updateProfilePic = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded!" });
+    }
+    const user = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        profilePic: {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
+        },
+      },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "Profile picture updated successfully!", user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
